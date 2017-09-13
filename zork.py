@@ -53,5 +53,10 @@ def main():
     score = score +5
     print("Score:" + str(score))
     print(location)
+
+    #conclusion
+    print("You decide that King da Ka wasn't a good idea and leave Six Flags with\n"
+          "dissapointment..\n\n"
+          "Copyright (c) Andrew DiBella       Andrew.DiBella1@marist.edu")
 main()
     
