@@ -22,27 +22,32 @@ def main():
     score = 0
     location = ""
 
+    #Starting Location 
     location = entrance
     print(location)
-    
+
+    #Ferriswheel
     input("Move to next location")
     location = ferrisWheel
     score= score +5
     print("Score:" + str(score))
     print(location)
-    
+
+    #Bridge
     input("Move to next location")
     location = bridge
     score = score +5
     print("Score:" + str(score))
     print(location)
-    
+
+    #RollerCoaster
     input("Move to next location")
     location = rollerCoaster
     score = score +5
     print("Score:" + str(score))
     print(location)
-    
+
+    #Entrance 2nd time
     input("Move to next location")
     location = entrance
     score = score +5
