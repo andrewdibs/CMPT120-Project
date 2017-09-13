@@ -18,45 +18,45 @@ def main():
     entrance= "You are at the Entrance of an amusement park"
     ferrisWheel= "You are at the Ferris Wheel"
     bridge = "You are sitting on the bridge"
-    rollerCoaster = "You are at the roller coaster"
+    kingDaKa = "You are at King da Ka"
     score = 0
     location = ""
 
     #Starting Location 
     location = entrance
-    print(location)
+    print(location+"\n")
 
     #Ferriswheel
-    input("Move to next location")
+    input("Press Enter: Move to next location\n==\n")
     location = ferrisWheel
     score= score +5
     print("Score:" + str(score))
-    print(location)
+    print(location+"\n")
 
     #Bridge
-    input("Move to next location")
+    input("Press Enter: Move to next location\n==\n")
     location = bridge
     score = score +5
     print("Score:" + str(score))
-    print(location)
+    print(location+"\n")
 
     #RollerCoaster
-    input("Move to next location")
-    location = rollerCoaster
+    input("Press Enter: Move to next location\n==\n")
+    location = kingDaKa
     score = score +5
     print("Score:" + str(score))
-    print(location)
+    print(location+"\n")
 
     #Entrance 2nd time
-    input("Move to next location")
+    input("Press Enter: Move to next location\n==\n")
     location = entrance
     score = score +5
     print("Score:" + str(score))
-    print(location)
+    print(location+"\n")
 
     #conclusion
     print("You decide that King da Ka wasn't a good idea and leave Six Flags with\n"
-          "dissapointment..\n\n"
+          "dissapointment..\n==\n"
           "Copyright (c) Andrew DiBella       Andrew.DiBella1@marist.edu")
 main()
     
