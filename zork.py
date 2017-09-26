@@ -13,6 +13,7 @@ def main():
     northWall   = "You are north of the Wall. Watch out for White Walkers."
     score = 0
     location = ""
+    character = ""
     
     #Boolean Variables
     vistCasBlack = True
@@ -29,16 +30,54 @@ def main():
         #Back Story
         print("Winter is coming....You've seen the first white walker beyond\n"
               "the wall and wake up from a short coma in Castle Black. You \n"
-              "must warn the people to prepare for an attack.\n"
+              "must warn the people of Westeros to prepare for an attack.\n"
               "Who will you tell first? Who's side will you take?...\n"
               "\t======================================================\n")
 
+    def character():
+        while True:
+            userInput = input("Please choose a character:\n"
+                              "Jon Snow\tTyrion Lannister\n"
+                              "Arya Stark\tJaime Lannister\n"
+                              "Enter character: \n")
+            character = userInput.lower()
+        
+            if character[0:3] == "jon":
+                character = "Jon Snow"
+                break
+            
+            if character[0:3] == "ary":
+                character = "Arya"
+                break
+            
+            if character[0:3] == "tyr":
+                character = "Tyrion"
+                break
+            
+            if character[0:3] == "jai":
+                character = "Jaime"
+                break
+            
+            else:
+                print("Not valid character name.")
+
+        return character
+          
+    
+        
+    
     def conclusion():
         print("You were killed by white walkers and westeros has been overrun"
               "..\n==\n"
               "Copyright (c) Andrew DiBella       Andrew.DiBella1@marist.edu")
-    
+
+
+    #################
     titleIntro()
+    character = character()
+    print(character)
+    #################
+    
     #Castle Black
     location = castleBlack
     print(location+"\n")
@@ -72,9 +111,6 @@ def main():
     print(location+"\n")
 
     conclusion()
-    def conclusion():
-        print("You were killed by white walkers and westeros has been overrun"
-              "..\n==\n"
-              "Copyright (c) Andrew DiBella       Andrew.DiBella1@marist.edu")
+
 main()
     
