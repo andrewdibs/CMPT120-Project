@@ -63,7 +63,9 @@ def main():
 
         return character
           
-    
+    def scoreLocation():
+        print("You are currently in " ,location)
+        print("Score: ", score, "\n")
         
     
     def conclusion():
@@ -72,10 +74,12 @@ def main():
               "Copyright (c) Andrew DiBella       Andrew.DiBella1@marist.edu")
 
 
+
     #################
     titleIntro()
     character = character()
     print(character)
+    scoreLocation()
     #################
     
     #Castle Black
