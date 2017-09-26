@@ -23,6 +23,14 @@ def main():
     northWall   = "You are north of the Wall. Watch out for White Walkers."
     score = 0
     location = ""
+    
+    #Boolean Variables
+    vistCasBlack = True
+    visitWinterfell = False
+    visitCasRock = False
+    visitDragonstone = False
+    visitIronIslands = False
+    visitNorthWall = False
 
     #Castle Black
     location = castleBlack
