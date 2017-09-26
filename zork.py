@@ -5,58 +5,60 @@
 def main():
 
     #Title
-    print("\t\t\tRunaway Train\n"
-          "\t\t\t=============\n")
+    print("\t\t\t Game of Thrones\n"
+          "\t\t\t=================\n")
     #Back Story
-    print("You are a roller coaster enthusiast and you finally found the opportunity\n"
-          "to go to Six flags to ride the record breaking King da Ka.\n"
-          "After a 3 hour long car ride you can finally see the monstrous ride and\n"
-          "feel a little worried and you think to yourself\n\n"
-          "Maybe the runaway train is a better option...\n")
+    print("Winter is coming....You've seen the first white walker beyond\n"
+          "the wall and wake up from a short coma in Castle Black. You \n"
+          "must warn the people to prepare for an attack.\n"
+          "Who will you tell first? Who's side will you take?...\n"
+          "\t======================================================\n")
 
     #Instance Variables          
-    entrance= "You are at the Entrance of an amusement park"
-    ferrisWheel= "You are at the Ferris Wheel"
-    bridge = "You are sitting on the bridge"
-    kingDaKa = "You are at King da Ka"
+    castleBlack = "You are at Castle Black. The Night's Watch is preparing for battle."
+    winterfell  = "You are at Winterfell. The Starks welcome you."
+    casterlyRock= "You are at Casterly Rock. Good luck with Cersei Lannister"
+    dragonstone = "You are in Dragonstone. Don't piss off the dragons."
+    ironIslands = "You are on the Iron Islands. Watch out for sharks."
+    northWall   = "You are north of the Wall. Watch out for White Walkers."
     score = 0
     location = ""
 
-    #Starting Location 
-    location = entrance
+    #Castle Black
+    location = castleBlack
     print(location+"\n")
 
-    #Ferriswheel
+    #Winterfell 
     input("Press Enter: Move to next location\n==\n")
-    location = ferrisWheel
+    location = winterfell
     score= score +5
     print("Score:" + str(score))
     print(location+"\n")
 
-    #Bridge
+    #Casterly Rock 
     input("Press Enter: Move to next location\n==\n")
-    location = bridge
+    location = casterlyRock
     score = score +5
     print("Score:" + str(score))
     print(location+"\n")
 
-    #RollerCoaster
+    #Dragonstone
     input("Press Enter: Move to next location\n==\n")
-    location = kingDaKa
+    location = dragonstone
     score = score +5
     print("Score:" + str(score))
     print(location+"\n")
 
-    #Entrance 2nd time
+    #North of the Wall 
     input("Press Enter: Move to next location\n==\n")
-    location = entrance
+    location = northWall
     score = score +5
     print("Score:" + str(score))
     print(location+"\n")
 
     #conclusion
-    print("You decide that King da Ka wasn't a good idea and leave Six Flags with\n"
-          "dissapointment..\n==\n"
+    print("You were killed by white walkers and westeros has been overrun"
+          "..\n==\n"
           "Copyright (c) Andrew DiBella       Andrew.DiBella1@marist.edu")
 main()
     
