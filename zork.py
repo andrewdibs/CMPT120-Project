@@ -4,16 +4,6 @@
 
 def main():
 
-    #Title
-    print("\t\t\t Game of Thrones\n"
-          "\t\t\t=================\n")
-    #Back Story
-    print("Winter is coming....You've seen the first white walker beyond\n"
-          "the wall and wake up from a short coma in Castle Black. You \n"
-          "must warn the people to prepare for an attack.\n"
-          "Who will you tell first? Who's side will you take?...\n"
-          "\t======================================================\n")
-
     #Instance Variables          
     castleBlack = "You are at Castle Black. The Night's Watch is preparing for battle."
     winterfell  = "You are at Winterfell. The Starks welcome you."
@@ -31,7 +21,24 @@ def main():
     visitDragonstone = False
     visitIronIslands = False
     visitNorthWall = False
+    
+    def titleIntro():
+        #Title
+        print("\t\t\t Game of Thrones\n"
+              "\t\t\t=================\n")
+        #Back Story
+        print("Winter is coming....You've seen the first white walker beyond\n"
+              "the wall and wake up from a short coma in Castle Black. You \n"
+              "must warn the people to prepare for an attack.\n"
+              "Who will you tell first? Who's side will you take?...\n"
+              "\t======================================================\n")
 
+    def conclusion():
+        print("You were killed by white walkers and westeros has been overrun"
+              "..\n==\n"
+              "Copyright (c) Andrew DiBella       Andrew.DiBella1@marist.edu")
+    
+    titleIntro()
     #Castle Black
     location = castleBlack
     print(location+"\n")
@@ -64,9 +71,10 @@ def main():
     print("Score:" + str(score))
     print(location+"\n")
 
-    #conclusion
-    print("You were killed by white walkers and westeros has been overrun"
-          "..\n==\n"
-          "Copyright (c) Andrew DiBella       Andrew.DiBella1@marist.edu")
+    conclusion()
+    def conclusion():
+        print("You were killed by white walkers and westeros has been overrun"
+              "..\n==\n"
+              "Copyright (c) Andrew DiBella       Andrew.DiBella1@marist.edu")
 main()
     
