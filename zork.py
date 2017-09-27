@@ -1,9 +1,10 @@
-#Zork First Steps
+#Zork Version0.3
 #Author Andrew DiBella
-#Date: 9 September 2017
+#Date: 26 September 2017
+
+
 
 def main():
-
     #Instance Variables          
     castleBlack = "You are at Castle Black. The Night's Watch is preparing for battle."
     winterfell  = "You are at Winterfell. The Starks welcome you."
@@ -16,12 +17,21 @@ def main():
     character = ""
     
     #Boolean Variables
-    vistCasBlack = True
+    visitCasBlack = True
     visitWinterfell = False
     visitCasRock = False
     visitDragonstone = False
     visitIronIslands = False
     visitNorthWall = False
+
+
+    def mainLoop():
+        titleIntro()
+        character = setCharacter()
+        print(character)
+        scoreLocation(location, score)
+
+        
     
     def titleIntro():
         #Title
@@ -34,7 +44,8 @@ def main():
               "Who will you tell first? Who's side will you take?...\n"
               "\t======================================================\n")
 
-    def character():
+    def setCharacter():
+        
         while True:
             userInput = input("Please choose a character:\n"
                               "Jon Snow\tTyrion Lannister\n"
@@ -62,59 +73,24 @@ def main():
                 print("Not valid character name.")
 
         return character
+
+
           
-    def scoreLocation():
+    def scoreLocation(location, score):
         print("You are currently in " ,location)
         print("Score: ", score, "\n")
         
     
     def conclusion():
-        print("You were killed by white walkers and westeros has been overrun"
+        print("You were killed by White Walkers and Westeros has been overrun"
               "..\n==\n"
               "Copyright (c) Andrew DiBella       Andrew.DiBella1@marist.edu")
 
 
-
-    #################
-    titleIntro()
-    character = character()
-    print(character)
-    scoreLocation()
-    #################
-    
-    #Castle Black
-    location = castleBlack
-    print(location+"\n")
-
-    #Winterfell 
-    input("Press Enter: Move to next location\n==\n")
-    location = winterfell
-    score= score +5
-    print("Score:" + str(score))
-    print(location+"\n")
-
-    #Casterly Rock 
-    input("Press Enter: Move to next location\n==\n")
-    location = casterlyRock
-    score = score +5
-    print("Score:" + str(score))
-    print(location+"\n")
-
-    #Dragonstone
-    input("Press Enter: Move to next location\n==\n")
-    location = dragonstone
-    score = score +5
-    print("Score:" + str(score))
-    print(location+"\n")
-
-    #North of the Wall 
-    input("Press Enter: Move to next location\n==\n")
-    location = northWall
-    score = score +5
-    print("Score:" + str(score))
-    print(location+"\n")
-
+    #Stack
+    mainLoop()
     conclusion()
+
 
 main()
     
