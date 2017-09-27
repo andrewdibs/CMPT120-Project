@@ -68,17 +68,53 @@ def main():
                       "Quit\n")
             if command == "quit":
                 exit()
+
+                
             #Castle Black
             if location == castleBlack:
                 countCasBlack += 1
+                visitCasBlack = True
+                
                 if command == "north":
                     location = northWall
+                    score += 5
+                if command == "south":
+                    location = winterfell
+                    score += 5
+                if command == "east":
+                    location = dragonstone
 
+                    
+            #North of Wall
             elif location == northWall:
-                if not visitCasBlack or not visitWinterfell or not visitKingsLanding or not visitDragonstone or not visitIronIslands:
+                countNorthWall += 1
+                visitNorthWall = True
+                
+                if score < 25:
                     print("Why the hell would you go beyond the wall..")
                     break
+                else:
+                    print(character, ", it's time to take down the Night King.")
+                    break
+
+            #Winterfell
+            elif location == winterfell:
+                countWinterfell += 1
+                visitWinterfell = True
                 
+                if command == "west":
+                    location = ironIslands
+                    score += 5
+                if command == "east":
+                    location = kingsLanding
+                    score += 5
+                if command == "north":
+                    location = castleBlack
+                    score += 5
+
+            #Kings Landing
+
+            #Dragonstone
     
     def titleIntro():
         #Title
@@ -124,7 +160,7 @@ def main():
 
           
     def scoreLocation(location, score):
-        print("You are currently in " ,location)
+        print(location)
         print("Score: ", score, "\n")
         
     
