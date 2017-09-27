@@ -5,33 +5,80 @@
 
 
 def main():
-    #Instance Variables          
-    castleBlack = "You are at Castle Black. The Night's Watch is preparing for battle."
-    winterfell  = "You are at Winterfell. The Starks welcome you."
-    casterlyRock= "You are at Casterly Rock. Good luck with Cersei Lannister"
-    dragonstone = "You are in Dragonstone. Don't piss off the dragons."
-    ironIslands = "You are on the Iron Islands. Watch out for sharks."
-    northWall   = "You are north of the Wall. Watch out for White Walkers."
-    score = 0
-    location = ""
-    character = ""
+    
+
+    def mainGame():
+        #Instance Variables          
+        castleBlack = "You are at Castle Black. The Night's Watch is preparing \nfor battle."
+        winterfell  = "You are at Winterfell. The Starks welcome you."
+        kingsLanding= "You are at King's Landing. Good luck with Cersei Lannister"
+        dragonstone = "You are in Dragonstone. Don't piss off the dragons."
+        ironIslands = "You are on the Iron Islands. Watch out for sharks."
+        northWall   = "You are north of the Wall. Watch out for White Walkers."
+        score = 0
+        location = castleBlack
+        character = ""
     
     #Boolean Variables
-    visitCasBlack = True
-    visitWinterfell = False
-    visitCasRock = False
-    visitDragonstone = False
-    visitIronIslands = False
-    visitNorthWall = False
+        visitCasBlack = True
+        visitWinterfell = False
+        visitKingsLanding = False
+        visitDragonstone = False
+        visitIronIslands = False
+        visitNorthWall = False
 
-
-    def mainLoop():
+    #Number of times each location has been visited
+        countCasBlack = 0
+        countWinterfell = 0
+        countKingsLanding = 0
+        countDragonstone = 0
+        countIronIslands = 0
+        countNorthWallm = 0
         titleIntro()
         character = setCharacter()
-        print(character)
-        scoreLocation(location, score)
-
+    #Starting character chosen print statement
+        if character == "Jon Snow":
+            print("You are Jon Snow, King of the North.")
+        if character == "Jaime":
+            print("You are Jaime Lannister, deadly even with one hand.\n")
+        if character == "Arya":
+            print("You are Arya Stark, I worry for anyone who gets in your way.\n")
+        if character == "Tyrion":
+            print("You are the dwarf Tyrion Lannister, you drink and know things\n")
+            
         
+
+        while True:
+            scoreLocation(location, score)
+            
+            if countCasBlack == 0:
+                    print(character,"!!!WAKE UP! We have to get the hell out "
+                          "of here. Where should we go?")
+                    
+            command = input("Enter Command: ").lower()
+            
+            
+            if command == "help":
+                print("Possible commands:\n"
+                      "Help\n"
+                      "North\n"
+                      "South\n"
+                      "East\n"
+                      "West\n"
+                      "Quit\n")
+            if command == "quit":
+                exit()
+            #Castle Black
+            if location == castleBlack:
+                countCasBlack += 1
+                if command == "north":
+                    location = northWall
+
+            elif location == northWall:
+                if not visitCasBlack or not visitWinterfell or not visitKingsLanding or not visitDragonstone or not visitIronIslands:
+                    print("Why the hell would you go beyond the wall..")
+                    break
+                
     
     def titleIntro():
         #Title
@@ -88,7 +135,7 @@ def main():
 
 
     #Stack
-    mainLoop()
+    mainGame()
     conclusion()
 
 
