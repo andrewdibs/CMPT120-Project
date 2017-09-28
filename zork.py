@@ -8,7 +8,8 @@ def main():
     
 
     def mainGame():
-        #Instance Variables          
+
+    #Instance Variables          
         castleBlack = "You are at Castle Black. The Night's Watch is preparing \nfor battle."
         winterfell  = "You are at Winterfell. The Starks welcome you."
         kingsLanding= "You are at King's Landing. Good luck with Cersei Lannister"
@@ -33,9 +34,12 @@ def main():
         countKingsLanding = 0
         countDragonstone = 0
         countIronIslands = 0
-        countNorthWallm = 0
+        countNorthWall = 0
+
+    #Start of Game
         titleIntro()
         character = setCharacter()
+
     #Starting character chosen print statement
         if character == "Jon Snow":
             print("You are Jon Snow, King of the North.")
@@ -49,6 +53,7 @@ def main():
         
 
         while True:
+            
             scoreLocation(location, score)
             
             if countCasBlack == 0:
@@ -56,7 +61,6 @@ def main():
                           "of here. Where should we go?")
                     
             command = input("Enter Command: ").lower()
-            
             
             if command == "help":
                 print("Possible commands:\n"
@@ -70,7 +74,7 @@ def main():
                 exit()
 
                 
-            #Castle Black
+        #Castle Black
             if location == castleBlack:
                 countCasBlack += 1
                 visitCasBlack = True
@@ -78,14 +82,16 @@ def main():
                 if command == "north":
                     location = northWall
                     score += 5
-                if command == "south":
+                elif command == "south":
                     location = winterfell
                     score += 5
-                if command == "east":
+                elif command == "east":
                     location = dragonstone
+                else:
+                    print("Invalid command.")
 
                     
-            #North of Wall
+        #North of Wall
             elif location == northWall:
                 countNorthWall += 1
                 visitNorthWall = True
@@ -97,7 +103,7 @@ def main():
                     print(character, ", it's time to take down the Night King.")
                     break
 
-            #Winterfell
+        #Winterfell
             elif location == winterfell:
                 countWinterfell += 1
                 visitWinterfell = True
@@ -105,16 +111,50 @@ def main():
                 if command == "west":
                     location = ironIslands
                     score += 5
-                if command == "east":
+                elif command == "east":
                     location = kingsLanding
                     score += 5
-                if command == "north":
+                elif command == "north":
                     location = castleBlack
                     score += 5
+                else:
+                    print("Invalid command.")
 
-            #Kings Landing
+        #Kings Landing
+            elif location == kingsLanding:
+                countKingsLanding +=1
+                visitKingsLanding = True
 
-            #Dragonstone
+                if command == "north":
+                    location = dragonstone
+                elif command == "west":
+                    location = winterfell
+                else:
+                    print("Invalid command.")
+
+                    
+        #Dragonstone                   
+            elif location == dragonstone:
+                countDragonstone += 1
+                visitDragonstone = True
+                
+                if command == "south":
+                    location = kingsLanding
+                elif command == "west":
+                    location = castleBlack
+                else:
+                    print("Invalid command.")
+
+
+         #Iron Islands                   
+            elif location == ironIslands:
+                countIronIslands += 1
+                visitIronIslands = True
+
+                if command == "east":
+                    location = winterfell
+                else:
+                    print("Invalid command.")
     
     def titleIntro():
         #Title
