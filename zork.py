@@ -117,7 +117,16 @@ def main():
                     score += 5
 
                 countWinterfell += 1
-                
+
+                if countWinterfell == 1:
+                    sansaQues= input("You are greeted by Sansa Stark..\n Sansa: "+character +
+                                     ", will you help us win this war?\nYes or no: ").lower()
+                    if sansaQues == "yes":
+                        print("\nWinterfell thanks you. We will win this together.")
+                        score += 5 
+                    if sansaQues == "no":
+                        print("\nJust remember who the real enemy is..")
+                        
                 if command == "west":
                     location = ironIslands
                 elif command == "east":
