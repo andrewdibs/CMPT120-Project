@@ -76,15 +76,17 @@ def main():
                 
         #Castle Black
             if location == castleBlack:
-                countCasBlack += 1
                 visitCasBlack = True
+
+                if countCasBlack < 1:
+                    score += 5
+
+                countCasBlack += 1
                 
                 if command == "north":
                     location = northWall
-                    score += 5
                 elif command == "south":
                     location = winterfell
-                    score += 5
                 elif command == "east":
                     location = dragonstone
                 else:
@@ -93,9 +95,13 @@ def main():
                     
         #North of Wall
             elif location == northWall:
-                countNorthWall += 1
                 visitNorthWall = True
-                
+
+                if countNorthWall < 1:
+                    score += 5
+
+                countNorthWall += 1
+
                 if score < 25:
                     print("Why the hell would you go beyond the wall..")
                     break
@@ -105,25 +111,30 @@ def main():
 
         #Winterfell
             elif location == winterfell:
-                countWinterfell += 1
                 visitWinterfell = True
+
+                if countWinterfell < 1:
+                    score += 5
+
+                countWinterfell += 1
                 
                 if command == "west":
                     location = ironIslands
-                    score += 5
                 elif command == "east":
                     location = kingsLanding
-                    score += 5
                 elif command == "north":
                     location = castleBlack
-                    score += 5
                 else:
                     print("Invalid command.")
 
         #Kings Landing
             elif location == kingsLanding:
-                countKingsLanding +=1
                 visitKingsLanding = True
+
+                if countKingsLanding < 1:
+                    score += 5
+
+                countKingsLanding +=1
 
                 if command == "north":
                     location = dragonstone
@@ -135,8 +146,12 @@ def main():
                     
         #Dragonstone                   
             elif location == dragonstone:
-                countDragonstone += 1
                 visitDragonstone = True
+
+                if countDragonstone < 1:
+                    score += 5
+
+                countDragonstone += 1
                 
                 if command == "south":
                     location = kingsLanding
@@ -148,8 +163,12 @@ def main():
 
          #Iron Islands                   
             elif location == ironIslands:
-                countIronIslands += 1
                 visitIronIslands = True
+
+                if countIronIslands == 1:
+                    score += 5
+
+                countIronIslands += 1
 
                 if command == "east":
                     location = winterfell
