@@ -54,7 +54,6 @@ def main():
 
         while True:
             
-            scoreLocation(location, score)
             
             if countCasBlack == 0:
                     print(character,"!!!WAKE UP! We have to get the hell out "
@@ -106,7 +105,7 @@ def main():
                     print("Why the hell would you go beyond the wall..")
                     break
                 else:
-                    print(character, ", it's time to take down the Night King.")
+                    print(character,", it's time to take down the Night King.")
                     break
 
         #Winterfell
@@ -183,6 +182,9 @@ def main():
                     location = winterfell
                 else:
                     print("Invalid command.")
+
+            scoreLocation(location, score)
+
     
     def titleIntro():
         #Title
