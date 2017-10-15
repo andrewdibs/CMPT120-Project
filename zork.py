@@ -1,6 +1,6 @@
-#Zork Version0.3
+#Zork Version0.5
 #Author Andrew DiBella
-#Date: 26 September 2017
+#Date: 15 Oct 2017
 
 
 
@@ -9,15 +9,20 @@ def main():
 
     def mainGame():
 
-    #Instance Variables          
-        castleBlack = "You are at Castle Black. The Night's Watch is preparing \nfor battle."
-        winterfell  = "You are at Winterfell. The Starks welcome you."
-        kingsLanding= "You are at King's Landing. Good luck with Cersei Lannister"
-        dragonstone = "You are in Dragonstone. Don't piss off the dragons."
-        ironIslands = "You are on the Iron Islands. Watch out for sharks."
-        northWall   = "You are north of the Wall. Watch out for White Walkers."
+    #Locations list
+        location = [
+                    "You are at Castle Black. The Night's Watch is preparing \nfor battle.",
+                    "You are at Winterfell. The Starks welcome you." , 
+                    "You are at King's Landing. Good luck with Cersei Lannister" ,
+                    "You are in Dragonstone. Don't piss off the dragons." ,
+                    "You are on the Iron Islands. Watch out for sharks." ,
+                    "You are north of the Wall. Watch out for White Walkers.",
+                    "You are in Highgarden, home of House Tyrell." ,
+                    "You are at Braavos, the Free city."
+                    ]
+                    
         score = 0
-        location = castleBlack
+        curLocation = location[0]
         character = ""
     
     #Boolean Variables
@@ -74,7 +79,7 @@ def main():
 
                 
         #Castle Black
-            if location == castleBlack:
+            if curLocation == location[0]:
                 visitCasBlack = True
 
                 if countCasBlack < 1:
@@ -83,17 +88,17 @@ def main():
                 countCasBlack += 1
                 
                 if command == "north":
-                    location = northWall
+                    curLocation = location[5]
                 elif command == "south":
-                    location = winterfell
+                    curLocation = location[1]
                 elif command == "east":
-                    location = dragonstone
+                    curLocation = location[3]
                 else:
                     print("Invalid command.")
 
                     
         #North of Wall
-            elif location == northWall:
+            elif curLocation == location[5]:
                 visitNorthWall = True
 
                 if countNorthWall < 1:
@@ -109,7 +114,7 @@ def main():
                     break
 
         #Winterfell
-            elif location == winterfell:
+            elif curLocation == location[1]:
                 visitWinterfell = True
 
                 if countWinterfell < 1:
@@ -127,16 +132,16 @@ def main():
                         print("\nJust remember who the real enemy is..")
                         
                 if command == "west":
-                    location = ironIslands
+                    curLocation = location[4]
                 elif command == "east":
-                    location = kingsLanding
+                    curLocation = location[2]
                 elif command == "north":
-                    location = castleBlack
+                    curLocation = location[0]
                 else:
                     print("Invalid command.")
 
         #Kings Landing
-            elif location == kingsLanding:
+            elif curLocation == location[2]:
                 visitKingsLanding = True
 
                 if countKingsLanding < 1:
@@ -145,15 +150,15 @@ def main():
                 countKingsLanding +=1
 
                 if command == "north":
-                    location = dragonstone
+                    curLocation = location[3]
                 elif command == "west":
-                    location = winterfell
+                    curLocation = location[1]
                 else:
                     print("Invalid command.")
 
                     
         #Dragonstone                   
-            elif location == dragonstone:
+            elif curLocation == location[3]:
                 visitDragonstone = True
 
                 if countDragonstone < 1:
@@ -162,15 +167,15 @@ def main():
                 countDragonstone += 1
                 
                 if command == "south":
-                    location = kingsLanding
+                    curLocation = location[2]
                 elif command == "west":
-                    location = castleBlack
+                    curLocation = location[0]
                 else:
                     print("Invalid command.")
 
 
          #Iron Islands                   
-            elif location == ironIslands:
+            elif curLocation == location[4]:
                 visitIronIslands = True
 
                 if countIronIslands == 1:
@@ -179,11 +184,11 @@ def main():
                 countIronIslands += 1
 
                 if command == "east":
-                    location = winterfell
+                    curLocation = location[1]
                 else:
                     print("Invalid command.")
 
-            scoreLocation(location, score)
+            scoreLocation(curLocation, score)
 
     
     def titleIntro():
@@ -229,8 +234,8 @@ def main():
 
 
           
-    def scoreLocation(location, score):
-        print(location)
+    def scoreLocation(curLocation, score):
+        print(curLocation)
         print("Score: ", score, "\n")
         
     
