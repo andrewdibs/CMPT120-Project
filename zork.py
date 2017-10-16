@@ -73,9 +73,17 @@ def main():
                       "South\n"
                       "East\n"
                       "West\n"
+                      "Menu\n"
+                      "Map\n"
                       "Quit\n")
+                continue
+            
             if command == "quit":
                 exit()
+
+            if command == "menu":
+                print(showMenu(score, character, curLocation))
+                continue
 
                 
         #Castle Black
@@ -232,7 +240,15 @@ def main():
 
         return character
 
+    def showMenu(score, character ,curLocation):
 
+        menu = ( "\n\n\t\t\tMain Menu\n"
+                 "\t\t   ==================\n"+character+
+                 "\nScore:" + str(score) +
+                 "\nMoves Remaining: "+
+                 "\nCurrent Location: "+ curLocation+"\n\n")
+        return menu
+        
           
     def scoreLocation(curLocation, score):
         print(curLocation)
