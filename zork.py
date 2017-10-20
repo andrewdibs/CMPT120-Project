@@ -11,14 +11,14 @@ def main():
 
     #Locations list
         location = [
-                    "You are at Castle Black. The Night's Watch is preparing \nfor battle.",
-                    "You are at Winterfell. The Starks welcome you." , 
-                    "You are at King's Landing. Good luck with Cersei Lannister" ,
-                    "You are in Dragonstone. Don't piss off the dragons." ,
-                    "You are on the Iron Islands. Watch out for sharks." ,
-                    "You are north of the Wall. Watch out for White Walkers.",
-                    "You are in Highgarden, home of House Tyrell." ,
-                    "You are at Braavos, the Free city."
+                    "You are at Castle Black. The Night's Watch is preparing \nfor battle."
+                ,   "You are at Winterfell. The Starks welcome you." 
+                ,   "You are at King's Landing. Good luck with Cersei Lannister" 
+                ,   "You are in Dragonstone. Don't piss off the dragons." 
+                ,   "You are on the Iron Islands. Watch out for sharks." 
+                ,   "You are north of the Wall. Watch out for White Walkers."
+                ,   "You are in Highgarden, home of House Tyrell." 
+                ,   "You are at Braavos, the Free city."
                     ]
                     
         score = 0
@@ -26,20 +26,20 @@ def main():
         character = ""
     
     #Boolean Variables
-        visitCasBlack = True
-        visitWinterfell = False
-        visitKingsLanding = False
-        visitDragonstone = False
-        visitIronIslands = False
-        visitNorthWall = False
+        hasBeenThere = [     #### LIST KEY #####
+                                
+                        True    #CasBlack[0]
+                    ,   False   #Winterfell[1]
+                    ,   False   #KingsLanding[2]
+                    ,   False   #Dragonstone[3]
+                    ,   False   #IronIslands[4]
+                    ,   False   #NorthWall[5]
+                    ,   False   #HighGarden[6]
+                    ,   False   #Braavos[7]
+                        ]
 
     #Number of times each location has been visited
-        countCasBlack = 0
-        countWinterfell = 0
-        countKingsLanding = 0
-        countDragonstone = 0
-        countIronIslands = 0
-        countNorthWall = 0
+        countHasBeen = [0,0,0,0,0,0,0,0]
 
     #Start of Game
         titleIntro()
@@ -55,11 +55,9 @@ def main():
         if character == "Tyrion":
             print("You are the dwarf Tyrion Lannister, you drink and know things\n")
             
-        
 
         while True:
-            
-            
+
             if countCasBlack == 0:
                     print(character,"!!!WAKE UP! We have to get the hell out "
                           "of here. Where should we go?")
