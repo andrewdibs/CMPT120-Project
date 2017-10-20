@@ -22,6 +22,7 @@ def main():
                     ]
                     
         score = 0
+        moves = 100
         curLocation = location[0]
         character = ""
     
@@ -44,6 +45,7 @@ def main():
     #Start of Game
         titleIntro()
         character = setCharacter()
+        moves = setDifficulty()
             
         while True:
 
@@ -69,7 +71,7 @@ def main():
                 exit()
 
             if command == "menu":
-                print(showMenu(score, character, curLocation))
+                print(showMenu(score, character, moves, curLocation))
                 continue
 
                 
@@ -184,6 +186,7 @@ def main():
                     print("Invalid command.")
 
             printLocation(curLocation)
+            moves -= 1
 
     
     def titleIntro():
@@ -231,19 +234,37 @@ def main():
 
         return character
 
-    def showMenu(score, character ,curLocation):
+    def showMenu(score, character ,moves, curLocation):
 
         menu = ( "\n\n\t\t\tMain Menu\n"
                  "\t\t   ==================\n"+character+
                  "\nScore:" + str(score) +
-                 "\nMoves Remaining: "+
+                 "\nMoves Remaining: "+ str(moves) +
                  "\nCurrent Location: "+ curLocation+"\n\n")
         return menu
         
           
     def printLocation(curLocation):
         print(curLocation, "\n")
-        
+
+    def setDifficulty():
+        while True:
+            cmd = input("Please Select Difficulty:\n"
+                    "Easy\n"
+                    "Medium\n"
+                    "Hard\n"
+                    "Realistic\n"
+                    ">>:").lower()
+            if cmd == "easy":
+                return 100
+            elif cmd == "medium":
+                return 75
+            elif cmd == "hard":
+                return 50
+            elif cmd == "realistic":
+                return 25
+            else:
+                print("Invalid command")
         
     
     def conclusion():
