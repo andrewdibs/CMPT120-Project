@@ -4,249 +4,264 @@
 
 
 
-def main():
+
     
 
-    def mainGame():
-
+def mainGame():
     #Locations list
-        location = [
-                    "You are at Castle Black. The Night's Watch is preparing \nfor battle."
-                ,   "You are at Winterfell. The Starks welcome you." 
-                ,   "You are at King's Landing. Good luck with Cersei Lannister" 
-                ,   "You are in Dragonstone. Don't piss off the dragons." 
-                ,   "You are on the Iron Islands. Watch out for sharks." 
-                ,   "You are north of the Wall. Watch out for White Walkers."
-                ,   "You are in Highgarden, home of House Tyrell." 
-                ,   "You are at Braavos, the Free city."
+    location = [
+                "You are at Castle Black. The Night's Watch is preparing \nfor battle."
+            ,   "You are at Winterfell. The Starks welcome you." 
+            ,   "You are at King's Landing. Good luck with Cersei Lannister" 
+            ,   "You are in Dragonstone. Don't piss off the dragons." 
+            ,   "You are on the Iron Islands. Watch out for sharks." 
+            ,   "You are north of the Wall. Watch out for White Walkers."
+            ,   "You are in Highgarden, home of House Tyrell." 
+            ,   "You are at Braavos, the Free city."
                     ]
-                    
-        score = 0
-        moves = 100
-        curLocation = location[0]
-        character = ""
+
+    score = 0
+    moves = 100
+    curLocation = location[0]
+    character = ""
+
+    stats = [score,curLocation, moves, location ]
     
     #Boolean Variables
-        hasBeenThere = [     #### LIST KEY #####
+    hasBeenThere = [     #### LIST KEY #####
                                 
-                        True    #CasBlack[0]
-                    ,   False   #Winterfell[1]
-                    ,   False   #KingsLanding[2]
-                    ,   False   #Dragonstone[3]
-                    ,   False   #IronIslands[4]
-                    ,   False   #NorthWall[5]
-                    ,   False   #HighGarden[6]
-                    ,   False   #Braavos[7]
-                        ]
+                    False    #CasBlack[0]
+                ,   False   #Winterfell[1]
+                ,   False   #KingsLanding[2]
+                ,   False   #Dragonstone[3]
+                ,   False   #IronIslands[4]
+                ,   False   #NorthWall[5]
+                ,   False   #HighGarden[6]
+                ,   False   #Braavos[7]
+                    ]
 
     #Number of times each location has been visited
-        countHasBeen = [0,0,0,0,0,0,0,0]
-
-    #Start of Game
-        titleIntro()
-        character = setCharacter()
-        moves = setDifficulty()
+    countHasBeen = [0,0,0,0,0,0,0,0]
             
-        while True:
+    while True:
 
-            if countHasBeen[0] == 0:
-                    print(character,"!!!WAKE UP! We have to get the hell out "
-                          "of here. Where should we go?")
+        if countHasBeen[0] == 0:
+                print(character,"!!!WAKE UP! We have to get the hell out "
+                      "of here. Where should we go?")
                     
-            command = input("Enter Command: ").lower()
+        command = input("Enter Command: ").lower()
             
-            if command == "help":
-                print("Possible commands:\n"
-                      "Help\n"
-                      "North\n"
-                      "South\n"
-                      "East\n"
-                      "West\n"
-                      "Menu\n"
-                      "Map\n"
-                      "Quit\n")
-                continue
+        if command == "help":
+            print("Possible commands:\n"
+                    "Help\n"
+                    "North\n"
+                    "South\n"
+                    "East\n"
+                    "West\n"
+                    "Menu\n"
+                    "Map\n"
+                    "Quit\n")
+            continue
             
-            if command == "quit":
-                exit()
+        elif command == "quit":
+            exit()
 
-            if command == "menu":
-                print(showMenu(score, character, moves, curLocation))
-                continue
+        elif command == "menu":
+            print(showMenu(score, character, moves, curLocation))
+            continue
 
-            if command == "map":
-                showMap()
+        elif command == "map":
+            showMap()
+            continue
                 
         #Castle Black
-            if curLocation == location[0]:
-                hasBeenThere[0] = True
-
-                if countHasBeen[0] < 1:
-                    score += 5
-
-                countHasBeen[0] += 1
+        if curLocation == location[0]:
+    
+            countHasBeen[0] += 1
                 
-                if command == "north":
-                    curLocation = location[5]
-                elif command == "south":
-                    curLocation = location[1]
-                elif command == "east":
-                    curLocation = location[3]
-                else:
-                    print("Invalid command.")
+            if command == "north":
+                stats = goTo(location[5],hasBeenThere[0],stats)
+                curLocation = stats[1]
+                score = stats[0]
+ 
+            elif command == "south":
+                stats = goTo(location[1], hasBeenThere[0],stats)
+                curLocation = stats[1]
+                score = stats[0]
+ 
+            elif command == "east":
+                stats = goTo(location[3], hasBeenThere[0],stats)
+                curLocation = stats[1]
+                score = stats[0]
+                    
+            elif command == "west" :
+                    print("Wrong Way.")
+ 
+            else:
+                print("Invalid command.")
+
+            hasBeenThere[0] = True
 
                     
         #North of Wall
-            elif curLocation == location[5]:
-                hasBeenThere[5] = True
+        elif curLocation == location[5]:
+            hasBeenThere[5] = True
 
-                if countHasBeen[5] < 1:
-                    score += 5
+            if countHasBeen[5] < 1:
+                score += 5
 
-                countHasBeen[5] += 1
+            countHasBeen[5] += 1
 
-                if score < 25:
-                    print("Why the hell would you go beyond the wall..")
-                    break
-                else:
-                    print(character,", it's time to take down the Night King.")
-                    break
+            if score < 25:
+                print("Why the hell would you go beyond the wall..")
+                break
+            else:
+                print(character,", it's time to take down the Night King.")
+                break
 
         #Winterfell
-            elif curLocation == location[1]:
-                hasBeenThere[1] = True
+        elif curLocation == location[1]:
+            hasBeenThere[1] = True
 
-                if countHasBeen[1] < 1:
-                    score += 5
+            if countHasBeen[1] < 1:
+                score += 5
 
-                countHasBeen[1] += 1
+            countHasBeen[1] += 1
 
-                if countHasBeen[1] == 1:
-                    sansaQues= input("You are greeted by Sansa Stark..\n Sansa: "+character +
+            if countHasBeen[1] == 1:
+                sansaQues= input("You are greeted by Sansa Stark..\n Sansa: "+character +
                                      ", will you help us win this war?\nYes or no: ").lower()
-                    if sansaQues == "yes":
-                        print("\nWinterfell thanks you. We will win this together.")
-                        score += 5 
-                    if sansaQues == "no":
-                        print("\nJust remember who the real enemy is..")
+                if sansaQues == "yes":
+                    print("\nWinterfell thanks you. We will win this together.")
+                    score += 5 
+                if sansaQues == "no":
+                    print("\nJust remember who the real enemy is..")
                         
-                if command == "west":
-                    curLocation = location[4]
-                elif command == "east":
+            if command == "west":
+                curLocation = location[4]
+            elif command == "east":
                     curLocation = location[2]
-                elif command == "north":
-                    curLocation = location[0]
-                else:
-                    print("Invalid command.")
+            elif command == "north":
+                curLocation = location[0]
+            elif command == "south":
+                print("Wrong Way.")
+            else:
+                print("Invalid command.")
 
         #Kings Landing
-            elif curLocation == location[2]:
-                hasBeenThere[2] = True
+        elif curLocation == location[2]:
+            hasBeenThere[2] = True
 
-                if countHasBeen[2] < 1:
-                    score += 5
+            if countHasBeen[2] < 1:
+                score += 5
 
-                countHasBeen[2] +=1
+            countHasBeen[2] +=1
 
-                if command == "north":
-                    curLocation = location[3]
-                elif command == "west":
-                    curLocation = location[1]
-                else:
-                    print("Invalid command.")
+            if command == "north":
+                curLocation = location[3]
+            elif command == "west":
+                curLocation = location[1]
+            elif command == "east" or command == "south":
+                    print("Wrong Way.")
+            else:
+                print("Invalid command.")
 
                     
         #Dragonstone                   
-            elif curLocation == location[3]:
-                hasBeenThere[3] = True
+        elif curLocation == location[3]:
+            hasBeenThere[3] = True
 
-                if countHasBeen[3] < 1:
-                    score += 5
+            if countHasBeen[3] < 1:
+                score += 5
 
-                countHasBeen[3] += 1
+            countHasBeen[3] += 1
                 
-                if command == "south":
-                    curLocation = location[2]
-                elif command == "west":
-                    curLocation = location[0]
-                else:
-                    print("Invalid command.")
+            if command == "south":
+                curLocation = location[2]
+            elif command == "west":
+                curLocation = location[0]
+            elif command == "north" or command == "east":
+                print("Wrong Way.")
+            else:
+                print("Invalid command.")
 
 
          #Iron Islands                   
-            elif curLocation == location[4]:
-                hasBeenThere[4] = True
+        elif curLocation == location[4]:
+            hasBeenThere[4] = True
 
-                if countHasBeen[4] == 1:
-                    score += 5
+            if countHasBeen[4] == 1:
+                score += 5
 
-                countHasBeen[4] += 1
+            countHasBeen[4] += 1
 
-                if command == "east":
-                    curLocation = location[1]
-                else:
-                    print("Invalid command.")
+            if command == "east":
+                curLocation = location[1]
+            elif command == "west" or command == "north" or command == "south":
+                print("Wrong Way.")
+            else:
+                print("Invalid command.")
 
-            printLocation(curLocation)
-            moves -= 1
+        printLocation(curLocation)
+        moves -= 1
 
     
-    def titleIntro():
+def titleIntro():
         #Title
-        print("\t\t\t Game of Thrones\n"
-              "\t\t\t=================\n")
+    print("\t\t\t Game of Thrones\n"
+          "\t\t\t=================\n")
         #Back Story
-        print("Winter is coming....You've seen the first white walker beyond\n"
+    print("Winter is coming....You've seen the first white walker beyond\n"
               "the wall and wake up from a short coma in Castle Black. You \n"
               "must warn the people of Westeros to prepare for an attack.\n"
               "Who will you tell first? Who's side will you take?...\n"
               "\t======================================================\n")
 
-    def setCharacter():
+def setCharacter():
         
-        while True:
-            userInput = input("Please choose a character:\n"
+    while True:
+        userInput = input("Please choose a character:\n"
                               "Jon Snow\tTyrion Lannister\n"
                               "Arya Stark\tJaime Lannister\n"
                               "Enter character: \n")
-            character = userInput.lower()
+        character = userInput.lower()
         
-            if character[0:3] == "jon":
-                character = "Jon Snow"
-                print("You are Jon Snow, King of the North.\n")
-                break
+        if character[0:3] == "jon":
+            character = "Jon Snow"
+            print("You are Jon Snow, King of the North.\n")
+            break
             
-            if character[0:3] == "ary":
-                character = "Arya"
-                print("You are Arya Stark, I worry for anyone who gets in your way.\n")
-                break
+        if character[0:3] == "ary":
+            character = "Arya"
+            print("You are Arya Stark, I worry for anyone who gets in your way.\n")
+            break
             
-            if character[0:3] == "tyr":
-                character = "Tyrion"
-                print("You are the dwarf Tyrion Lannister, you drink and know things\n")
-                break
+        if character[0:3] == "tyr":
+            character = "Tyrion"
+            print("You are the dwarf Tyrion Lannister, you drink and know things\n")
+            break
             
-            if character[0:3] == "jai":
-                character = "Jaime"
-                print("You are Jaime Lannister, deadly even with one hand.\n")
-                break
+        if character[0:3] == "jai":
+            character = "Jaime"
+            print("You are Jaime Lannister, deadly even with one hand.\n")
+            break
             
-            else:
-                print("Not valid character name.")
+        else:
+            print("Not valid character name.")
 
-        return character
+    return character
 
-    def showMenu(score, character ,moves, curLocation):
+def showMenu(score, character ,moves, curLocation):
 
-        menu = ( "\n\n\t\t\tMain Menu\n"
+    menu = ( "\n\n\t\t\tMain Menu\n"
                  "\t\t   ==================\n"+character+
                  "\nScore:" + str(score) +
                  "\nMoves Remaining: "+ str(moves) +
                  "\nCurrent Location: "+ curLocation+"\n\n")
-        return menu
+    return menu
 
-    def showMap():
-        print(" ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"
+def showMap():
+    print(" ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"
               "<                                                          >\n"
               "<                       North Wall                         >\n"
               "<                            *                             >\n"
@@ -266,39 +281,52 @@ def main():
               " vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv\n")
               
           
-    def printLocation(curLocation):
-        print(curLocation, "\n")
+def printLocation(curLocation):
+    print(curLocation, "\n")
 
-    def setDifficulty():
-        while True:
-            cmd = input("Please Select Difficulty:\n"
+def goTo( newLocation, hasBeen,stats):
+        
+    stats[1] = newLocation
+    if not hasBeen:
+        stats[0] += 5
+    return stats
+
+       
+
+def setDifficulty():
+    while True:
+        cmd = input("Please Select Difficulty:\n"
                     "Easy\n"
                     "Medium\n"
                     "Hard\n"
                     "Realistic\n"
                     ">>:").lower()
-            if cmd == "easy":
-                return 100
-            elif cmd[0:3] == "med":
-                return 75
-            elif cmd == "hard":
-                return 50
-            elif cmd[0:4] == "real":
-                return 25
-            else:
-                print("Invalid command")
+        if cmd == "easy":
+            return 100
+        elif cmd[0:3] == "med":
+            return 75
+        elif cmd == "hard":
+            return 50
+        elif cmd[0:4] == "real":
+            return 25
+        else:
+            print("Invalid command")
         
     
-    def conclusion():
-        print("You were killed by White Walkers and Westeros has been overrun"
+def conclusion():
+    print("You were killed by White Walkers and Westeros has been overrun"
               "..\n==\n"
               "Copyright (c) Andrew DiBella       Andrew.DiBella1@marist.edu")
 
-
+def main():
     #Stack
+    titleIntro()
+    character = setCharacter()
+    moves = setDifficulty()
     mainGame()
     conclusion()
 
 
 main()
+
     
