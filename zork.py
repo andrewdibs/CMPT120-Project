@@ -74,6 +74,8 @@ def main():
                 print(showMenu(score, character, moves, curLocation))
                 continue
 
+            if command == "map":
+                showMap()
                 
         #Castle Black
             if curLocation == location[0]:
@@ -242,7 +244,27 @@ def main():
                  "\nMoves Remaining: "+ str(moves) +
                  "\nCurrent Location: "+ curLocation+"\n\n")
         return menu
-        
+
+    def showMap():
+        print(" ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"
+              "<                                                          >\n"
+              "<                       North Wall                         >\n"
+              "<                            *                             >\n"
+              "<                            *                             >\n"
+              "<                            *                             >\n"
+              "<                      Castle Black-----DragonStone        >\n"
+              "<                            *               *             >\n"
+              "<                            *               *             >\n"
+              "<                            *               *             >\n"
+              "<      IronIslands------Winterfell------KingsLanding       >\n"
+              "<                            *               *             >\n"
+              "<                            *               *             >\n"
+              "<                            *               *             >\n"
+              "<                       HighGarden--------Braavos          >\n"
+              "<                                                          >\n"
+              "<                                                          >\n"
+              " vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv\n")
+              
           
     def printLocation(curLocation):
         print(curLocation, "\n")
@@ -257,11 +279,11 @@ def main():
                     ">>:").lower()
             if cmd == "easy":
                 return 100
-            elif cmd == "medium":
+            elif cmd[0:3] == "med":
                 return 75
             elif cmd == "hard":
                 return 50
-            elif cmd == "realistic":
+            elif cmd[0:4] == "real":
                 return 25
             else:
                 print("Invalid command")
