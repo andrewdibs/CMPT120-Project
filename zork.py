@@ -166,8 +166,8 @@ def mainGame():
             elif curLocation == location[2]:
                 goTo(1)
 
-            elif curLocation == location[8]:
-                goTo(7)
+            elif curLocation == location[7]:
+                goTo(6)
 
             elif curLocation == location[1]:
                 goTo(4)
@@ -246,7 +246,7 @@ def showMenu(score, character ,moves, curLocation):
     return menu
 
 def showMap():
-    print(" ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"
+    print(  " ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"
               "<                                                          >\n"
               "<                       North Wall                         >\n"
               "<                            *                             >\n"
