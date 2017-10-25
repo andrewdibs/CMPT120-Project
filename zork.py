@@ -2,12 +2,21 @@
 #Author Andrew DiBella
 #Date: 15 Oct 2017
 
-
-
-
-    
+score = 0
+curLocation = ""
+hasBeenThere = []
+location = []
+countHasBeen = []
 
 def mainGame():
+
+    #Global Variables 
+    global score
+    global curLocation
+    global hasBeenThere 
+    global location 
+    global countHasBeen 
+
     #Locations list
     location = [
                 "You are at Castle Black. The Night's Watch is preparing \nfor battle."
@@ -20,8 +29,8 @@ def mainGame():
             ,   "You are at Braavos, the Free city."
                     ]
 
-    score = 0
-    moves = 100
+ 
+    moves = setDifficulty()
     curLocation = location[0]
     character = ""
 
@@ -42,12 +51,14 @@ def mainGame():
 
     #Number of times each location has been visited
     countHasBeen = [0,0,0,0,0,0,0,0]
-            
+    
+    character = setCharacter()          
     while True:
 
         if countHasBeen[0] == 0:
                 print(character,"!!!WAKE UP! We have to get the hell out "
                       "of here. Where should we go?")
+                countHasBeen[0] += 1
                     
         command = input("Enter Command: ").lower()
             
@@ -73,44 +84,98 @@ def mainGame():
         elif command == "map":
             showMap()
             continue
-                
-        #Castle Black
-        if curLocation == location[0]:
-    
-            countHasBeen[0] += 1
-                
-            if command == "north":
-                stats = goTo(location[5],hasBeenThere[0],stats)
-                curLocation = stats[1]
-                score = stats[0]
- 
-            elif command == "south":
-                stats = goTo(location[1], hasBeenThere[0],stats)
-                curLocation = stats[1]
-                score = stats[0]
- 
-            elif command == "east":
-                stats = goTo(location[3], hasBeenThere[0],stats)
-                curLocation = stats[1]
-                score = stats[0]
-                    
-            elif command == "west" :
-                    print("Wrong Way.")
- 
-            else:
-                print("Invalid command.")
 
-            hasBeenThere[0] = True
+        #NORTH
+        elif command == "north":
+
+            if curLocation == location[0]:
+                goTo(5)
+
+            elif curLocation== location[1]:
+                goTo(0)
+
+            elif curLocation == location[6]:
+                goTo(1)
+
+            elif curLocation == location[7]:
+                goTo(2)
+
+            elif curLocation == location[2]:
+                goTo(3)
+
+            elif curLocation == location[7]:
+                goTo(2)
+
+            else:
+                print("Wrong Way.")
+
+        #SOUTH
+        elif command == "south":
+
+            if curLocation == location[0]:
+                goTo(1)
+                
+                while countHasBeen[1] == 1:
+                    sansaQues= input("You are greeted by Sansa Stark..\n Sansa: "+character +
+                                     ", will you help us win this war?\nYes or no: ").lower()
+
+                    if sansaQues == "yes":
+                        print("\nWinterfell thanks you. We will win this together.")
+                        score += 5
+                        break
+                    elif sansaQues == "no":
+                        print("\nJust remember who the real enemy is..")
+                        break
+                
+            elif curLocation == location[3]:
+                goTo(2)
+
+            elif curLocation == location[2]:
+                goTo(7)
+
+            elif curLocation == location[1]:
+                goTo(6)
+
+            else:
+                print("Wrong Way.")
+                
+
+        #EAST
+        elif command == "east":
+            if curLocation == location[0]:
+                goTo(3)
+
+            elif curLocation == location[1]:
+                goTo(2)
+
+            elif curLocation == location[6]:
+                goTo(7)
+
+            elif curLocation == location[4]:
+                goTo(1)
+
+            else:
+                print("Wrong Way.")
+
+        #WEST
+        elif command == "west":
+
+            if curLocation == location[3]:
+                goTo(0)
+
+            elif curLocation == location[2]:
+                goTo(1)
+
+            elif curLocation == location[8]:
+                goTo(7)
+
+            elif curLocation == location[1]:
+                goTo(4)
+
 
                     
         #North of Wall
-        elif curLocation == location[5]:
-            hasBeenThere[5] = True
-
-            if countHasBeen[5] < 1:
-                score += 5
-
-            countHasBeen[5] += 1
+        if curLocation == location[5]:
 
             if score < 25:
                 print("Why the hell would you go beyond the wall..")
@@ -119,88 +184,8 @@ def mainGame():
                 print(character,", it's time to take down the Night King.")
                 break
 
-        #Winterfell
-        elif curLocation == location[1]:
-            hasBeenThere[1] = True
-
-            if countHasBeen[1] < 1:
-                score += 5
-
-            countHasBeen[1] += 1
-
-            if countHasBeen[1] == 1:
-                sansaQues= input("You are greeted by Sansa Stark..\n Sansa: "+character +
-                                     ", will you help us win this war?\nYes or no: ").lower()
-                if sansaQues == "yes":
-                    print("\nWinterfell thanks you. We will win this together.")
-                    score += 5 
-                if sansaQues == "no":
-                    print("\nJust remember who the real enemy is..")
-                        
-            if command == "west":
-                curLocation = location[4]
-            elif command == "east":
-                    curLocation = location[2]
-            elif command == "north":
-                curLocation = location[0]
-            elif command == "south":
-                print("Wrong Way.")
-            else:
-                print("Invalid command.")
-
-        #Kings Landing
-        elif curLocation == location[2]:
-            hasBeenThere[2] = True
-
-            if countHasBeen[2] < 1:
-                score += 5
-
-            countHasBeen[2] +=1
-
-            if command == "north":
-                curLocation = location[3]
-            elif command == "west":
-                curLocation = location[1]
-            elif command == "east" or command == "south":
-                    print("Wrong Way.")
-            else:
-                print("Invalid command.")
-
-                    
-        #Dragonstone                   
-        elif curLocation == location[3]:
-            hasBeenThere[3] = True
-
-            if countHasBeen[3] < 1:
-                score += 5
-
-            countHasBeen[3] += 1
-                
-            if command == "south":
-                curLocation = location[2]
-            elif command == "west":
-                curLocation = location[0]
-            elif command == "north" or command == "east":
-                print("Wrong Way.")
-            else:
-                print("Invalid command.")
-
-
-         #Iron Islands                   
-        elif curLocation == location[4]:
-            hasBeenThere[4] = True
-
-            if countHasBeen[4] == 1:
-                score += 5
-
-            countHasBeen[4] += 1
-
-            if command == "east":
-                curLocation = location[1]
-            elif command == "west" or command == "north" or command == "south":
-                print("Wrong Way.")
-            else:
-                print("Invalid command.")
+        elif command != "north" and command != "south" and command != "east" and command!= "west": 
+            print("Invalid command.")
 
         printLocation(curLocation)
         moves -= 1
@@ -284,12 +269,20 @@ def showMap():
 def printLocation(curLocation):
     print(curLocation, "\n")
 
-def goTo( newLocation, hasBeen,stats):
-        
-    stats[1] = newLocation
-    if not hasBeen:
-        stats[0] += 5
-    return stats
+def goTo(i):
+    global curLocation
+    global score
+    global hasBeenThere
+    global countHasBeen
+    
+    curLocation = location[i]
+  
+    if not hasBeenThere[i]:
+        score += 5
+
+    hasBeenThere[i] = True
+    countHasBeen[i] += 1
+    
 
        
 
@@ -321,8 +314,6 @@ def conclusion():
 def main():
     #Stack
     titleIntro()
-    character = setCharacter()
-    moves = setDifficulty()
     mainGame()
     conclusion()
 
