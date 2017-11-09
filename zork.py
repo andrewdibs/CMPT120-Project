@@ -7,7 +7,8 @@ curLocation = ""
 hasBeenThere = []
 location = []
 countHasBeen = []
-
+searched = []
+locNames = []
 def mainGame():
 
     #Global Variables 
@@ -15,7 +16,9 @@ def mainGame():
     global curLocation
     global hasBeenThere 
     global location 
-    global countHasBeen 
+    global countHasBeen
+    global searched
+    global locNames
 
     #Locations list
     location = [
@@ -29,12 +32,10 @@ def mainGame():
             ,   "You are at Braavos, the Free city."
                     ]
 
- 
-    moves = setDifficulty()
-    curLocation = location[0]
-    character = ""
+    locNames = ["Castle Black", "Winterfell", "Kings Landing", "Dragonstone",
+                "Iron Islands", "North of Wall", "High Garden", "Braavos"    ]
 
-    stats = [score,curLocation, moves, location ]
+    searched = [False, False, False, False, False, False, False, False]
     
     #Boolean Variables
     hasBeenThere = [     #### LIST KEY #####
@@ -51,7 +52,12 @@ def mainGame():
 
     #Number of times each location has been visited
     countHasBeen = [0,0,0,0,0,0,0,0]
+
     
+    moves = setDifficulty()
+    curLocation = location[0]
+    character = ""
+
     character = setCharacter()          
     while True:
 
@@ -190,6 +196,10 @@ def mainGame():
         printLocation(curLocation)
         moves -= 1
 
+        if moves <0 :
+            conclusion()
+            quit()
+
     
 def titleIntro():
         #Title
@@ -282,7 +292,14 @@ def goTo(i):
 
     hasBeenThere[i] = True
     countHasBeen[i] += 1
-    
+
+def whereTo(curLocation, direction):
+    newLoc = world[curLocation][direction]
+
+    if newLoc is None:
+        #send error message
+        
+    #otherwise set curlocation to newlocation 
 
        
 
