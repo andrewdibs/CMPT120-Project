@@ -34,12 +34,15 @@ def mainGame():
             ,   "You are north of the Wall. Watch out for White Walkers."
             ,   "You are in Highgarden, home of House Tyrell." 
             ,   "You are at Braavos, the Free city."
+            ,   "You are in a dark eerie Cave."
+            ,   "You are at The Arena, get ready for battle. "
                     ]
 
     locNames = ["Castle Black", "Winterfell", "Kings Landing", "Dragonstone",
-                "Iron Islands", "North of Wall", "High Garden", "Braavos"    ]
+                "Iron Islands", "North of Wall", "High Garden", "Braavos",
+                "The Cave", "The Arena" ]
 
-    searched = [False, False, False, False, False, False, False, False]
+    searched = [False, False, False, False, False, False, False, False, False, False]
     
     #Boolean Variables
     hasBeenThere = [     #### LIST KEY #####
@@ -52,20 +55,24 @@ def mainGame():
                 ,   False   #NorthWall[5]
                 ,   False   #HighGarden[6]
                 ,   False   #Braavos[7]
+                ,   False   #TheCave[8]
+                ,   False   #theArean[9]
                     ]
 
     #Number of times each location has been visited
-    countHasBeen = [0,0,0,0,0,0,0,0]
+    countHasBeen = [0,0,0,0,0,0,0,0,0,0]
 
                 #north  #south  #east #west
     world =    [ [5,    1,      3,    None]  #CasBlack 0 
             ,    [0,    6,      2,    4   ]  #Winterfell 1
             ,    [3,    7,      None, 1   ]  #KingsLanding 2
-            ,    [None, 2,      None, 0   ]  #Dragonstone 3
+            ,    [8,    2,      None, 0   ]  #Dragonstone 3
             ,    [None, None,   1,    None]  #IronIslands 4
             ,    [None, 0,      None, None]  #NorthWall 5
-            ,    [1,    None,   7,    None]  #HighGarden 6 
+            ,    [1,    None,   7,    9   ]  #HighGarden 6 
             ,    [2,    None,   None, 6   ]  #Braavos 7
+            ,    [None, 3,      None, None]  #TheCave 8
+            ,    [None, None,   6,    None]  #theArena 9
 
         ]
     
@@ -208,8 +215,8 @@ def showMap():
               "<                                                          >\n"
               "<                       North Wall                         >\n"
               "<                            *                             >\n"
-              "<                            *                             >\n"
-              "<                            *                             >\n"
+              "<                            *            The Cave         >\n"
+              "<                            *               *             >\n"
               "<                      Castle Black-----DragonStone        >\n"
               "<                            *               *             >\n"
               "<                            *               *             >\n"
@@ -218,7 +225,7 @@ def showMap():
               "<                            *               *             >\n"
               "<                            *               *             >\n"
               "<                            *               *             >\n"
-              "<                       HighGarden--------Braavos          >\n"
+              "<        The Arena------HighGarden--------Braavos          >\n"
               "<                                                          >\n"
               "<                                                          >\n"
               " vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv\n")
@@ -243,6 +250,7 @@ def goTo(i):
 
 def whereTo(curLocation, direct):
     global world
+    global locIndex
     numDirect= None
     if direct == "north":
         numDirect = 0
@@ -259,9 +267,6 @@ def whereTo(curLocation, direct):
 
     else:
         goTo(newLoc)
-        
-        
-    #otherwise set curlocation to newlocation 
 
        
 
