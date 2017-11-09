@@ -1,4 +1,4 @@
-#Zork Version0.5
+#Zork Version0.7
 #Author Andrew DiBella
 #Date: 15 Oct 2017
 
@@ -9,6 +9,8 @@ location = []
 countHasBeen = []
 searched = []
 locNames = []
+world = []
+locIndex = 0
 def mainGame():
 
     #Global Variables 
@@ -19,6 +21,8 @@ def mainGame():
     global countHasBeen
     global searched
     global locNames
+    global world
+    global locIndex
 
     #Locations list
     location = [
@@ -53,6 +57,17 @@ def mainGame():
     #Number of times each location has been visited
     countHasBeen = [0,0,0,0,0,0,0,0]
 
+                #north  #south  #east #west
+    world =    [ [5,    1,      3,    None]  #CasBlack 0 
+            ,    [0,    6,      2,    4   ]  #Winterfell 1
+            ,    [3,    7,      None, 1   ]  #KingsLanding 2
+            ,    [None, 2,      None, 0   ]  #Dragonstone 3
+            ,    [None, None,   1,    None]  #IronIslands 4
+            ,    [None, 0,      None, None]  #NorthWall 5
+            ,    [1,    None,   7,    None]  #HighGarden 6 
+            ,    [2,    None,   None, 6   ]  #Braavos 7
+
+        ]
     
     moves = setDifficulty()
     curLocation = location[0]
@@ -66,9 +81,9 @@ def mainGame():
                       "of here. Where should we go?")
                 countHasBeen[0] += 1
                     
-        command = input("Enter Command: ").lower()
+        cmd = input("Enter Command: ").lower()
             
-        if command == "help":
+        if cmd == "help":
             print("Possible commands:\n"
                     "Help\n"
                     "North\n"
@@ -80,104 +95,37 @@ def mainGame():
                     "Quit\n")
             continue
             
-        elif command == "quit":
+        elif cmd == "quit":
             exit()
 
-        elif command == "menu":
+        elif cmd == "menu":
             print(showMenu(score, character, moves, curLocation))
             continue
-
-        elif command == "map":
+        
+        #Displays map
+        elif cmd == "map":
             showMap()
             continue
 
-        #NORTH
-        elif command == "north":
+        #Moves player
+        elif cmd== "north" or cmd == "south" or cmd == "east" or cmd == "west":
+            whereTo(locIndex, cmd)
 
-            if curLocation == location[0]:
-                goTo(5)
+        #Winterfell Alliance
+        if curLocation == location[1]:
+            while countHasBeen[1] == 1:
+                sansaQues= input("You are greeted by Sansa Stark..\n Sansa: "+character +
+                                 ", will you help us win this war?\nYes or no: ").lower()
 
-            elif curLocation== location[1]:
-                goTo(0)
-
-            elif curLocation == location[6]:
-                goTo(1)
-
-            elif curLocation == location[7]:
-                goTo(2)
-
-            elif curLocation == location[2]:
-                goTo(3)
-
-            elif curLocation == location[7]:
-                goTo(2)
-
-            else:
-                print("Wrong Way.")
-
-        #SOUTH
-        elif command == "south":
-
-            if curLocation == location[0]:
-                goTo(1)
-                
-                while countHasBeen[1] == 1:
-                    sansaQues= input("You are greeted by Sansa Stark..\n Sansa: "+character +
-                                     ", will you help us win this war?\nYes or no: ").lower()
-
-                    if sansaQues == "yes":
-                        print("\nWinterfell thanks you. We will win this together.")
-                        score += 5
-                        break
-                    elif sansaQues == "no":
-                        print("\nJust remember who the real enemy is..")
-                        break
-                
-            elif curLocation == location[3]:
-                goTo(2)
-
-            elif curLocation == location[2]:
-                goTo(7)
-
-            elif curLocation == location[1]:
-                goTo(6)
-
-            else:
-                print("Wrong Way.")
-                
-
-        #EAST
-        elif command == "east":
-            if curLocation == location[0]:
-                goTo(3)
-
-            elif curLocation == location[1]:
-                goTo(2)
-
-            elif curLocation == location[6]:
-                goTo(7)
-
-            elif curLocation == location[4]:
-                goTo(1)
-
-            else:
-                print("Wrong Way.")
-
-        #WEST
-        elif command == "west":
-
-            if curLocation == location[3]:
-                goTo(0)
-
-            elif curLocation == location[2]:
-                goTo(1)
-
-            elif curLocation == location[7]:
-                goTo(6)
-
-            elif curLocation == location[1]:
-                goTo(4)
-
+                if sansaQues == "yes":
+                    print("\nWinterfell thanks you. We will win this together.")
+                    score += 5
+                    break
+                elif sansaQues == "no":
+                    print("\nJust remember who the real enemy is..")
+                    break
+            
+ 
 
                     
         #North of Wall
@@ -190,7 +138,7 @@ def mainGame():
                 print(character,", it's time to take down the Night King.")
                 break
 
-        elif command != "north" and command != "south" and command != "east" and command!= "west": 
+        elif cmd != "north" and cmd != "south" and cmd != "east" and cmd!= "west": 
             print("Invalid command.")
 
         printLocation(curLocation)
@@ -293,11 +241,25 @@ def goTo(i):
     hasBeenThere[i] = True
     countHasBeen[i] += 1
 
-def whereTo(curLocation, direction):
-    newLoc = world[curLocation][direction]
-
+def whereTo(curLocation, direct):
+    global world
+    numDirect= None
+    if direct == "north":
+        numDirect = 0
+    elif direct == "south":
+        numDirect = 1
+    elif direct == "east":
+        numDirect = 2
+    elif direct == "west":
+        numDirect = 3
+    newLoc = world[curLocation][numDirect]
+    locIndex= newLoc
     if newLoc is None:
-        #send error message
+        print("Wrong Way.")
+
+    else:
+        goTo(newLoc)
+        
         
     #otherwise set curlocation to newlocation 
 
