@@ -8,6 +8,7 @@ hasBeenThere = []
 locDescript = []
 countHasBeen = []
 searched = []
+items = []
 locale = []
 world = []
 locIndex = 0
@@ -23,6 +24,7 @@ def mainGame():
     global locale
     global world
     global locIndex
+    global items
 
     #Locations list
     locDescript = [
@@ -43,6 +45,8 @@ def mainGame():
                 "The Cave", "The Arena" ]
 
     searched = [False, False, False, False, False, False, False, False, False, False]
+
+    items = [None, None, None, None, "Map", None, None, None, "Valyrian Steel Sword", "Armor"]
     
     #Boolean Variables
     hasBeenThere = [     #### LIST KEY #####
@@ -56,7 +60,7 @@ def mainGame():
                 ,   False   #HighGarden[6]
                 ,   False   #Braavos[7]
                 ,   False   #TheCave[8]
-                ,   False   #theArean[9]
+                ,   False   #theArena[9]
                     ]
 
     #Number of times each location has been visited
@@ -93,13 +97,17 @@ def mainGame():
         if cmd == "help":
             print("Possible commands:\n"
                     "Help\n"
+                    "Quit\n\n"
                     "North\n"
                     "South\n"
                     "East\n"
-                    "West\n"
+                    "West\n\n"
+                    "Look Around\n"
+                    "Search\n"
+                    "Take\n\n"
                     "Menu\n"
                     "Map\n"
-                    "Quit\n")
+                    )
             continue
             
         elif cmd == "quit":
@@ -110,8 +118,12 @@ def mainGame():
             continue
 
         #Shows location Description 
-        elif cmd == "look":
+        elif cmd[0:4] == "look":
             lookAround()
+            continue
+
+        elif cmd == "search":
+            searchArea()
             continue
         
         #Displays map
@@ -303,6 +315,18 @@ def setDifficulty():
 def lookAround():
     print(locDescript[locIndex])
         
+def searchArea():
+    global items
+    global searched
+    global locIndex
+    print("DEBUG:",locIndex)
+    if items[locIndex] != None:
+        print("Look there's a", items[locIndex])
+        searched[locIndex] = True
+
+    else:
+        print("There is nothing here.")
+
     
 def conclusion():
     print("You were killed by White Walkers and Westeros has been overrun"
