@@ -240,7 +240,7 @@ def goTo(i):
     global hasBeenThere
     global countHasBeen
     
-    curLocation = location[i]
+    curLocation = locNames[i]
   
     if not hasBeenThere[i]:
         score += 5
@@ -251,6 +251,7 @@ def goTo(i):
 def whereTo(curLocation, direct):
     global world
     global locIndex
+
     numDirect= None
     if direct == "north":
         numDirect = 0
@@ -260,13 +261,17 @@ def whereTo(curLocation, direct):
         numDirect = 2
     elif direct == "west":
         numDirect = 3
+
     newLoc = world[curLocation][numDirect]
-    locIndex= newLoc
+    
+
     if newLoc is None:
         print("Wrong Way.")
 
     else:
+        locIndex= newLoc
         goTo(newLoc)
+        
 
        
 
@@ -288,6 +293,9 @@ def setDifficulty():
             return 25
         else:
             print("Invalid command")
+
+def lookAround():
+    pass
         
     
 def conclusion():
