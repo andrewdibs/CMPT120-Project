@@ -5,10 +5,10 @@
 score = 0
 curLocation = ""
 hasBeenThere = []
-location = []
+locDescript = []
 countHasBeen = []
 searched = []
-locNames = []
+locale = []
 world = []
 locIndex = 0
 def mainGame():
@@ -17,15 +17,15 @@ def mainGame():
     global score
     global curLocation
     global hasBeenThere 
-    global location 
+    global locDescript 
     global countHasBeen
     global searched
-    global locNames
+    global locale
     global world
     global locIndex
 
     #Locations list
-    location = [
+    locDescript = [
                 "You are at Castle Black. The Night's Watch is preparing \nfor battle."
             ,   "You are at Winterfell. The Starks welcome you." 
             ,   "You are at King's Landing. Good luck with Cersei Lannister" 
@@ -38,7 +38,7 @@ def mainGame():
             ,   "You are at The Arena, get ready for battle. "
                     ]
 
-    locNames = ["Castle Black", "Winterfell", "Kings Landing", "Dragonstone",
+    locale = ["Castle Black", "Winterfell", "Kings Landing", "Dragonstone",
                 "Iron Islands", "North of Wall", "High Garden", "Braavos",
                 "The Cave", "The Arena" ]
 
@@ -77,7 +77,7 @@ def mainGame():
         ]
     
     moves = setDifficulty()
-    curLocation = location[0]
+    curLocation = locale[0]
     character = ""
 
     character = setCharacter()          
@@ -108,6 +108,11 @@ def mainGame():
         elif cmd == "menu":
             print(showMenu(score, character, moves, curLocation))
             continue
+
+        #Shows location Description 
+        elif cmd == "look":
+            lookAround()
+            continue
         
         #Displays map
         elif cmd == "map":
@@ -119,7 +124,7 @@ def mainGame():
             whereTo(locIndex, cmd)
 
         #Winterfell Alliance
-        if curLocation == location[1]:
+        if curLocation == locale[1]:
             while countHasBeen[1] == 1:
                 sansaQues= input("You are greeted by Sansa Stark..\n Sansa: "+character +
                                  ", will you help us win this war?\nYes or no: ").lower()
@@ -136,7 +141,7 @@ def mainGame():
 
                     
         #North of Wall
-        if curLocation == location[5]:
+        if curLocation == locale[5]:
 
             if score < 25:
                 print("Why the hell would you go beyond the wall..")
@@ -239,8 +244,9 @@ def goTo(i):
     global score
     global hasBeenThere
     global countHasBeen
+    global locale
     
-    curLocation = locNames[i]
+    curLocation = locale[i]
   
     if not hasBeenThere[i]:
         score += 5
@@ -295,7 +301,7 @@ def setDifficulty():
             print("Invalid command")
 
 def lookAround():
-    pass
+    print(locDescript[locIndex])
         
     
 def conclusion():
