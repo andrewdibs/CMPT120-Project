@@ -13,6 +13,7 @@ locale = []
 world = []
 inventory = []
 locIndex = 0
+
 def mainGame():
 
     #Global Variables 
@@ -27,6 +28,7 @@ def mainGame():
     global locIndex
     global items
     global inventory
+    
 
     #Locations list
     locDescript = [
@@ -131,8 +133,12 @@ def mainGame():
         
         #Displays map
         elif cmd == "map":
-            showMap()
-            continue
+            if "Map" in inventory:
+                showMap()
+                continue
+            else:
+                print("\n You don't have a map.\n")
+                continue
 
         elif cmd == "take":
             takeItem(locIndex)
