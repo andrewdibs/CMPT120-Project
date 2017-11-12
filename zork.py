@@ -172,7 +172,10 @@ def mainGame():
         elif cmd != "north" and cmd != "south" and cmd != "east" and cmd!= "west": 
             print("Invalid command.")
 
-        printLocation(curLocation)
+        if countHasBeen[locIndex] == 1:
+            print("\n",locDescript[locIndex], "\n")
+        else:
+            print("\n", curLocation, "\n")
         moves -= 1
 
         if moves <0 :
@@ -256,8 +259,6 @@ def showMap():
               " vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv\n")
               
           
-def printLocation(curLocation):
-    print(curLocation, "\n")
 
 def goTo(i):
     global curLocation
@@ -321,15 +322,15 @@ def setDifficulty():
             print("Invalid command\n")
 
 def lookAround():
-    print(locDescript[locIndex])
+    print("\n", locDescript[locIndex], "\n")
 
 def takeItem(locIndex):
     if searched[locIndex]:
         inventory.append(items[locIndex])
-        print(items[locIndex], "has been added to your inventory.\n")
+        print("\n",items[locIndex], "has been added to your inventory.\n")
 
     else:
-        print("Don't see anything to take.\n")
+        print("\nDon't see anything to take.\n")
 
 
 
@@ -340,11 +341,11 @@ def searchArea():
     global locIndex
     
     if items[locIndex] != None:
-        print("Look there's a", items[locIndex])
+        print("\n Look there's a", items[locIndex],"\n")
         searched[locIndex] = True
 
     else:
-        print("There is nothing here.\n")
+        print("\n There is nothing here.\n")
 
     
 def conclusion():
