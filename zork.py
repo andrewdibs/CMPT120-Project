@@ -11,6 +11,7 @@ searched = []
 items = []
 locale = []
 world = []
+inventory = []
 locIndex = 0
 def mainGame():
 
@@ -25,6 +26,7 @@ def mainGame():
     global world
     global locIndex
     global items
+    global inventory
 
     #Locations list
     locDescript = [
@@ -47,7 +49,8 @@ def mainGame():
     searched = [False, False, False, False, False, False, False, False, False, False]
 
     items = [None, None, None, None, "Map", None, None, None, "Valyrian Steel Sword", "Armor"]
-    
+
+    inventory = []
     #Boolean Variables
     hasBeenThere = [     #### LIST KEY #####
                                 
@@ -131,6 +134,10 @@ def mainGame():
             showMap()
             continue
 
+        elif cmd == "take":
+            takeItem(locIndex)
+            continue
+        
         #Moves player
         elif cmd== "north" or cmd == "south" or cmd == "east" or cmd == "west":
             whereTo(locIndex, cmd)
@@ -224,7 +231,8 @@ def showMenu(score, character ,moves, curLocation):
                  "\t\t   ==================\n"+character+
                  "\nScore:" + str(score) +
                  "\nMoves Remaining: "+ str(moves) +
-                 "\nCurrent Location: "+ curLocation+"\n\n")
+                 "\nCurrent Location: "+ curLocation+
+                 "\nInventory:"+ str(inventory) + "\n\n")
     return menu
 
 def showMap():
@@ -284,7 +292,7 @@ def whereTo(curLocation, direct):
     
 
     if newLoc is None:
-        print("Wrong Way.")
+        print("Wrong Way.\n")
 
     else:
         locIndex= newLoc
@@ -310,22 +318,33 @@ def setDifficulty():
         elif cmd[0:4] == "real":
             return 25
         else:
-            print("Invalid command")
+            print("Invalid command\n")
 
 def lookAround():
     print(locDescript[locIndex])
+
+def takeItem(locIndex):
+    if searched[locIndex]:
+        inventory.append(items[locIndex])
+        print(items[locIndex], "has been added to your inventory.\n")
+
+    else:
+        print("Don't see anything to take.\n")
+
+
+
         
 def searchArea():
     global items
     global searched
     global locIndex
-    print("DEBUG:",locIndex)
+    
     if items[locIndex] != None:
         print("Look there's a", items[locIndex])
         searched[locIndex] = True
 
     else:
-        print("There is nothing here.")
+        print("There is nothing here.\n")
 
     
 def conclusion():
