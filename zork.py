@@ -1,7 +1,7 @@
 #Zork Version0.7
 #Author Andrew DiBella
 #Date: 15 Oct 2017
-
+import sys
 score = 0
 curLocation = ""
 hasBeenThere = []
@@ -13,7 +13,7 @@ locale = []
 world = []
 inventory = []
 locIndex = 0
-
+battle = False
 def mainGame():
 
     #Global Variables 
@@ -28,7 +28,7 @@ def mainGame():
     global locIndex
     global items
     global inventory
-    
+    global battle
 
     #Locations list
     locDescript = [
@@ -163,17 +163,42 @@ def mainGame():
                     break
             
  
+        if curLocation == locale[9]:
+            if battle == False:
+                while True:
+                    response = input("The Hound challenges you to battle.\n"
+                                      "Do you accept? Yes/No: ")
+                    if response == "yes":
+                        if "Valyrian Steel Sword" in inventory:
+                            print("\n You used your sword to take down the hound.\n")
+                            
+                            inventory.append(items[9])
+                            print("You took the Hounds armor.\n\n"
+                                  "Armor has been added to your inventory.")
+                            battle = True
+                            break
 
+                        else:
+                            print("\nYou were killed by the Hound.")
+                            conclusion()
+                            sys.exit()
+                    
+
+                    elif response == "no":
+                        print("Hound: AHAHA, come back when your ready to fight.")
+                        break
                     
         #North of Wall
         if curLocation == locale[5]:
 
-            if score < 25:
-                print("Why the hell would you go beyond the wall..")
+            if "Valyrian Steel Sword" in inventory and "Armor" in inventory:
+                winGame()
                 break
+                
             else:
-                print(character,", it's time to take down the Night King.")
+                loseGame()
                 break
+
 
         elif cmd != "north" and cmd != "south" and cmd != "east" and cmd!= "west": 
             print("Invalid command.")
@@ -182,11 +207,15 @@ def mainGame():
             print("\n",locDescript[locIndex], "\n")
         else:
             print("\n", curLocation, "\n")
+
         moves -= 1
 
         if moves <0 :
-            conclusion()
-            quit()
+            print("You used all of your moves.")
+            loseGame()
+            break
+            
+            
 
     
 def titleIntro():
@@ -352,11 +381,16 @@ def searchArea():
 
     else:
         print("\n There is nothing here.\n")
-
+def loseGame():
+    print("You were killed by White Walkers and Westeros has been overrun..")
+    
+        
+def winGame():
+    print("You took down the Night King and the undead Army!!!")
+    
     
 def conclusion():
-    print("You were killed by White Walkers and Westeros has been overrun"
-              "..\n==\n"
+    print(    "\n==\n"
               "Copyright (c) Andrew DiBella       Andrew.DiBella1@marist.edu")
 
 def main():
