@@ -1,7 +1,10 @@
 #Zork Version0.9
 #Author Andrew DiBella
 #Date: 24 November 2017
+
 import sys
+import classesZork
+
 score = 0
 curLocation = ""
 hasBeenThere = []
@@ -31,7 +34,7 @@ def mainGame():
     global battle
 
     #Locations list
-    locDescript = [
+    longDescript = [
                 "You are at Castle Black. The Night's Watch is preparing \nfor battle."
             ,   "You are at Winterfell. The Starks welcome you." 
             ,   "You are at King's Landing. Good luck with Cersei Lannister" 
@@ -40,33 +43,41 @@ def mainGame():
             ,   "You are north of the Wall. Watch out for White Walkers."
             ,   "You are in Highgarden, home of House Tyrell." 
             ,   "You are at Braavos, the Free city."
-            ,   "You are in a dark eerie Cave."
+            ,   "You are in a dark eerie Cave. Don't make too much noise."
             ,   "You are at The Arena, get ready for battle. "
                     ]
 
-    locale = ["Castle Black", "Winterfell", "Kings Landing", "Dragonstone",
-                "Iron Islands", "North of Wall", "High Garden", "Braavos",
-                "The Cave", "The Arena" ]
+    shortDescript = [
+                "You are at Castle Black."
+            ,   "You are at Winterfell."
+            ,   "You are at King's Landing."
+            ,   "You are in Dragonstone."
+            ,   "You are on the Iron Islands."
+            ,   "You are north of the Wall."
+            ,   "You are in Highgarden."
+            ,   "You are in Braavos."
+            ,   "You are in a Cave."
+            ,   "You are at the Arena."
 
-    searched = [False, False, False, False, False, False, False, False, False, False]
+        ]
 
     items = [None, None, None, None, "Map", None, None, "Dragon Glass Dagger", "Valyrian Steel Sword", None]
 
+    locale = [  Locale("Castle Black",longDescript[0],shortDescript[0], items[0])
+            ,   Locale("Winterfell",longDescript[1],shortDescript[1], items[1])
+            ,   Locale("King's Landing",longDescript[2],shortDescript[2], items[2])
+            ,   Locale("Dragonstone",longDescript[3],shortDescript[3], items[3])
+            ,   Locale("Iron Islands",longDescript[4],shortDescript[4], items[4])
+            ,   Locale("North Wall",longDescript[5],shortDescript[5], items[5])
+            ,   Locale("Highgarden",longDescript[6],shortDescript[6], items[6])
+            ,   Locale("Braavos",longDescript[7],shortDescript[7], items[7])
+            ,   Locale("Cave",longDescript[8],shortDescript[8], items[8])
+            ,   Locale("Arena",longDescript[9],shortDescript[9], items[9])
+                 ]
+
+
     inventory = []
-    #Boolean Variables
-    hasBeenThere = [     #### LIST KEY #####
-                                
-                    False    #CasBlack[0]
-                ,   False   #Winterfell[1]
-                ,   False   #KingsLanding[2]
-                ,   False   #Dragonstone[3]
-                ,   False   #IronIslands[4]
-                ,   False   #NorthWall[5]
-                ,   False   #HighGarden[6]
-                ,   False   #Braavos[7]
-                ,   False   #TheCave[8]
-                ,   False   #theArena[9]
-                    ]
+    
 
     #Number of times each location has been visited
     countHasBeen = [0,0,0,0,0,0,0,0,0,0]
