@@ -1,6 +1,6 @@
-#Zork Version0.7
+#Zork Version0.9
 #Author Andrew DiBella
-#Date: 15 Oct 2017
+#Date: 24 November 2017
 import sys
 score = 0
 curLocation = ""
@@ -50,7 +50,7 @@ def mainGame():
 
     searched = [False, False, False, False, False, False, False, False, False, False]
 
-    items = [None, None, None, None, "Map", None, None, None, "Valyrian Steel Sword", "Armor"]
+    items = [None, None, None, None, "Map", None, None, "Dragon Glass Dagger", "Valyrian Steel Sword", None]
 
     inventory = []
     #Boolean Variables
@@ -172,7 +172,7 @@ def mainGame():
                         if "Valyrian Steel Sword" in inventory:
                             print("\n You used your sword to take down the hound.\n")
                             
-                            inventory.append(items[9])
+                            inventory.append("Armor")
                             print("You took the Hounds armor.\n\n"
                                   "Armor has been added to your inventory.")
                             battle = True
@@ -191,7 +191,7 @@ def mainGame():
         #North of Wall
         if curLocation == locale[5]:
 
-            if "Valyrian Steel Sword" in inventory and "Armor" in inventory:
+            if "Armor" in inventory and "Valyrian Steel Sword" in inventory:
                 winGame()
                 break
                 
