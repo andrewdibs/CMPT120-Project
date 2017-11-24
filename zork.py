@@ -3,7 +3,7 @@
 #Date: 24 November 2017
 
 import sys
-import classesZork
+from classesZork import Player, Locale
 
 score = 0
 curLocation = ""
@@ -24,8 +24,6 @@ def mainGame():
     global curLocation
     global hasBeenThere 
     global locDescript 
-    global countHasBeen
-    global searched
     global locale
     global world
     global locIndex
@@ -63,7 +61,7 @@ def mainGame():
 
     items = [None, None, None, None, "Map", None, None, "Dragon Glass Dagger", "Valyrian Steel Sword", None]
 
-    locale = [  Locale("Castle Black",longDescript[0],shortDescript[0], items[0])
+    locale= [  Locale("Castle Black",longDescript[0],shortDescript[0], items[0])
             ,   Locale("Winterfell",longDescript[1],shortDescript[1], items[1])
             ,   Locale("King's Landing",longDescript[2],shortDescript[2], items[2])
             ,   Locale("Dragonstone",longDescript[3],shortDescript[3], items[3])

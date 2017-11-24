@@ -33,7 +33,7 @@ class Player:
 
 class Locale:
 
-    def __init__(self, name, beforeVist, afterVisit, item):
+    def __init__(self, name, beforeVisit, afterVisit, item):
 
         self.name = name
         self.beforeVisit= beforeVisit
