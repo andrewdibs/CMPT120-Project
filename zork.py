@@ -61,7 +61,7 @@ def mainGame():
 
     items = [None, None, None, None, "Map", None, None, "Dragon Glass Dagger", "Valyrian Steel Sword", None]
 
-    locale= [  Locale("Castle Black",longDescript[0],shortDescript[0], items[0])
+    locale= [   Locale("Castle Black",longDescript[0],shortDescript[0], items[0])
             ,   Locale("Winterfell",longDescript[1],shortDescript[1], items[1])
             ,   Locale("King's Landing",longDescript[2],shortDescript[2], items[2])
             ,   Locale("Dragonstone",longDescript[3],shortDescript[3], items[3])
@@ -75,10 +75,6 @@ def mainGame():
 
 
     inventory = []
-    
-
-    #Number of times each location has been visited
-    countHasBeen = [0,0,0,0,0,0,0,0,0,0]
 
                 #north  #south  #east #west
     world =    [ [5,    1,      3,    None]  #CasBlack 0 
@@ -93,22 +89,20 @@ def mainGame():
             ,    [None, None,   6,    None]  #theArena 9
 
         ]
-    
-    moves = setDifficulty()
-    curLocation = locale[0]
-    character = ""
+    #Creates Player Object
+    player = Player(setCharacter(), setDifficulty())
 
-    character = setCharacter()          
+    
     while True:
 
-        if countHasBeen[0] == 0:
-                print(character,"!!!WAKE UP! We have to get the hell out "
+        if locale[0].count == 0:
+                print(player.name.upper(),"!!!WAKE UP! We have to get the hell out "
                       "of here. Where should we go?")
-                countHasBeen[0] += 1
+                locale[0].count += 1
                     
-        cmd = input("Enter Command: ").lower()
+        player.cmd = input("Enter Command: ").lower()
             
-        if cmd == "help":
+        if player.cmd == "help":
             print("Possible commands:\n"
                     "Help\n"
                     "Quit\n\n"
@@ -124,43 +118,43 @@ def mainGame():
                     )
             continue
             
-        elif cmd == "quit":
+        elif player.cmd == "quit":
             exit()
 
-        elif cmd == "menu":
+        elif player.cmd == "menu":
             print(showMenu(score, character, moves, curLocation))
             continue
 
         #Shows location Description 
-        elif cmd[0:4] == "look":
+        elif player.cmd[0:4] == "look":
             lookAround()
             continue
 
-        elif cmd == "search":
+        elif player.cmd == "search":
             searchArea()
             continue
         
         #Displays map
-        elif cmd == "map":
-            if "Map" in inventory:
+        elif player.cmd == "map":
+            if "Map" in player.inventory:
                 showMap()
                 continue
             else:
                 print("\n You don't have a map.\n")
                 continue
 
-        elif cmd == "take":
-            takeItem(locIndex)
+        elif player.cmd == "take":
+            player.take()
             continue
         
         #Moves player
-        elif cmd== "north" or cmd == "south" or cmd == "east" or cmd == "west":
-            whereTo(locIndex, cmd)
-
+        elif player.cmd== "north" or player.cmd == "south" or player.cmd == "east" or player.cmd == "west":
+            player.move(world,locale)
+            
         #Winterfell Alliance
         if curLocation == locale[1]:
-            while countHasBeen[1] == 1:
-                sansaQues= input("You are greeted by Sansa Stark..\n Sansa: "+character +
+            while locale[1].count == 1:
+                sansaQues= input("You are greeted by Sansa Stark..\n Sansa: "+player.name +
                                  ", will you help us win this war?\nYes or no: ").lower()
 
                 if sansaQues == "yes":
@@ -209,17 +203,17 @@ def mainGame():
                 break
 
 
-        elif cmd != "north" and cmd != "south" and cmd != "east" and cmd!= "west": 
+        elif player.cmd != "north" and player.cmd != "south" and player.cmd != "east" and player.cmd!= "west": 
             print("Invalid command.")
 
-        if countHasBeen[locIndex] == 1:
-            print("\n",locDescript[locIndex], "\n")
+        if locale[player.curLoc].count == 1:
+            print("\n",locale[player.curLoc].beforeVisit, "\n")
         else:
-            print("\n", curLocation, "\n")
+            print("\n", locale[player.curLoc].afterVisit, "\n")
 
-        moves -= 1
+        player.moves -= 1
 
-        if moves <0 :
+        if player.moves <0 :
             print("You used all of your moves.")
             loseGame()
             break
@@ -313,11 +307,11 @@ def goTo(i):
     
     curLocation = locale[i]
   
-    if not hasBeenThere[i]:
+    if not locale[i].visited:
         score += 5
 
-    hasBeenThere[i] = True
-    countHasBeen[i] += 1
+    locale[i].visited = True
+    locale[i].count += 1
 
 def whereTo(curLocation, direct):
     global world
