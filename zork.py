@@ -5,31 +5,12 @@
 import sys
 from classesZork import Player, Locale
 
-score = 0
-curLocation = ""
-hasBeenThere = []
-locDescript = []
-countHasBeen = []
-searched = []
-items = []
-locale = []
-world = []
-inventory = []
-locIndex = 0
-battle = False
+
 def mainGame():
 
     #Global Variables 
-    global score
-    global curLocation
-    global hasBeenThere 
-    global locDescript 
-    global locale
-    global world
-    global locIndex
-    global items
-    global inventory
-    global battle
+
+    battle= False
 
     #Locations list
     longDescript = [
@@ -73,8 +54,6 @@ def mainGame():
             ,   Locale("Arena",longDescript[9],shortDescript[9], items[9])
                  ]
 
-
-    inventory = []
 
                 #north  #south  #east #west
     world =    [ [5,    1,      3,    None]  #CasBlack 0 
@@ -122,7 +101,7 @@ def mainGame():
             exit()
 
         elif player.cmd == "menu":
-            print(showMenu(score, character, moves, curLocation))
+            player.displayMenu(locale)
             continue
 
         #Shows location Description 
@@ -131,7 +110,7 @@ def mainGame():
             continue
 
         elif player.cmd == "search":
-            searchArea()
+            player.search(locale)
             continue
         
         #Displays map
@@ -144,38 +123,41 @@ def mainGame():
                 continue
 
         elif player.cmd == "take":
-            player.take()
+            player.take(locale, items)
             continue
+
+        elif player.cmd[0:4] == "drop":
+            player.drop(locale)
         
         #Moves player
         elif player.cmd== "north" or player.cmd == "south" or player.cmd == "east" or player.cmd == "west":
             player.move(world,locale)
             
         #Winterfell Alliance
-        if curLocation == locale[1]:
+        if player.curLoc == 1:
             while locale[1].count == 1:
                 sansaQues= input("You are greeted by Sansa Stark..\n Sansa: "+player.name +
                                  ", will you help us win this war?\nYes or no: ").lower()
 
                 if sansaQues == "yes":
                     print("\nWinterfell thanks you. We will win this together.")
-                    score += 5
+                    player.score += 5
                     break
                 elif sansaQues == "no":
                     print("\nJust remember who the real enemy is..")
                     break
             
  
-        if curLocation == locale[9]:
+        if player.curLoc == 9:
             if battle == False:
                 while True:
                     response = input("The Hound challenges you to battle.\n"
                                       "Do you accept? Yes/No: ")
                     if response == "yes":
-                        if "Valyrian Steel Sword" in inventory:
+                        if "Valyrian Steel Sword" in player.inventory:
                             print("\n You used your sword to take down the hound.\n")
                             
-                            inventory.append("Armor")
+                            player.inventory.append("Armor")
                             print("You took the Hounds armor.\n\n"
                                   "Armor has been added to your inventory.")
                             battle = True
@@ -192,9 +174,9 @@ def mainGame():
                         break
                     
         #North of Wall
-        if curLocation == locale[5]:
+        if player.curLoc == 5:
 
-            if "Armor" in inventory and "Valyrian Steel Sword" in inventory:
+            if "Armor" in player.inventory and "Valyrian Steel Sword" in player.inventory:
                 winGame()
                 break
                 
@@ -266,16 +248,6 @@ def setCharacter():
 
     return character
 
-def showMenu(score, character ,moves, curLocation):
-
-    menu = ( "\n\n\t\t\tMain Menu\n"
-                 "\t\t   ==================\n"+character+
-                 "\nScore:" + str(score) +
-                 "\nMoves Remaining: "+ str(moves) +
-                 "\nCurrent Location: "+ curLocation+
-                 "\nInventory:"+ str(inventory) + "\n\n")
-    return menu
-
 def showMap():
     print(  " ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"
               "<                                                          >\n"
@@ -296,47 +268,6 @@ def showMap():
               "<                                                          >\n"
               " vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv\n")
               
-          
-
-def goTo(i):
-    global curLocation
-    global score
-    global hasBeenThere
-    global countHasBeen
-    global locale
-    
-    curLocation = locale[i]
-  
-    if not locale[i].visited:
-        score += 5
-
-    locale[i].visited = True
-    locale[i].count += 1
-
-def whereTo(curLocation, direct):
-    global world
-    global locIndex
-
-    numDirect= None
-    if direct == "north":
-        numDirect = 0
-    elif direct == "south":
-        numDirect = 1
-    elif direct == "east":
-        numDirect = 2
-    elif direct == "west":
-        numDirect = 3
-
-    newLoc = world[curLocation][numDirect]
-    
-
-    if newLoc is None:
-        print("Wrong Way.\n")
-
-    else:
-        locIndex= newLoc
-        goTo(newLoc)
-        
 
        
 
@@ -359,31 +290,7 @@ def setDifficulty():
         else:
             print("Invalid command\n")
 
-def lookAround():
-    print("\n", locDescript[locIndex], "\n")
 
-def takeItem(locIndex):
-    if searched[locIndex]:
-        inventory.append(items[locIndex])
-        print("\n",items[locIndex], "has been added to your inventory.\n")
-
-    else:
-        print("\nDon't see anything to take.\n")
-
-
-
-        
-def searchArea():
-    global items
-    global searched
-    global locIndex
-    
-    if items[locIndex] != None:
-        print("\n Look there's a", items[locIndex],"\n")
-        searched[locIndex] = True
-
-    else:
-        print("\n There is nothing here.\n")
 def loseGame():
     print("You were killed by White Walkers and Westeros has been overrun..")
     

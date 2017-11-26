@@ -42,18 +42,46 @@ class Player:
 
         
 
+    def search(self, locale):
+        if locale[self.curLoc].item != None:
+            print("\n Look there's a", locale[self.curLoc].item, "\n")
+            locale[self.curLoc].searched= True
+        else:
+            print("\nThere is nothing here.\n")
 
+         
+    def displayMenu(self,locale):
+        print( "\n\n\t\t\tMain Menu\n"
+                 "\t\t   ==================\n"+self.name+
+                 "\nScore:" + str(self.score)+
+                 "\nMoves Remaining: "+ str(self.moves) +
+                 "\nCurrent Location: "+ locale[self.curLoc].afterVisit+
+                 "\nInventory:"+ str(self.inventory) + "\n\n")
+        
+        
 
-    def take(self):
+    def take(self, locale, items):
         if locale[self.curLoc].searched:
-            self.inventory.appends(locale[self.curLoc].item)
+            self.inventory.append(locale[self.curLoc].item)
+            
+            print("\n", locale[self.curLoc].item, "has been added to your inventory\n")
+            
+            items[self.curLoc] = None
+            locale[self.curLoc].item = None
+
+            
         else:
             print("There is nothing to take.\n")
 
 
-    def drop(self):
-        pass
-    
+##    def drop(self, locale):
+##        for index in range(0, 10):
+##
+##            if self.cmd[5:].capitilize() == locale[index].item:
+##                self.inventory.remove(item)
+##                print(item, "has been dropped and removed from your inventory.\n")
+##                locale[index].item = 
+##    
 
     def describe(self):
         pass
