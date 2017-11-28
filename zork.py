@@ -40,7 +40,7 @@ def mainGame():
 
         ]
 
-    items = [None, None, None, None, "Map", None, None, "Dragon Glass Dagger", "Valyrian Steel Sword", None]
+    items = [None, "Boat", None, None, "Map", None, None, "Dragon Glass Dagger", "Valyrian Steel Sword", None]
 
     locale= [   Locale("Castle Black",longDescript[0],shortDescript[0], items[0])
             ,   Locale("Winterfell",longDescript[1],shortDescript[1], items[1])
@@ -122,12 +122,13 @@ def mainGame():
                 print("\n You don't have a map.\n")
                 continue
 
-        elif player.cmd == "take":
+        elif player.cmd[0:4] == "take":
             player.take(locale, items)
             continue
 
         elif player.cmd[0:4] == "drop":
             player.drop(locale)
+            continue
         
         #Moves player
         elif player.cmd== "north" or player.cmd == "south" or player.cmd == "east" or player.cmd == "west":

@@ -9,7 +9,7 @@ class Player:
         
         self.name = name
         self.moves = moves
-        self.inventory = []
+        self.inventory = [None,None,None,None,None,None,None,None,None,None,None,None]
         self.curLoc = 0
         self.cmd = ""
         self.score = 0
@@ -43,10 +43,14 @@ class Player:
         
 
     def search(self, locale):
-        if locale[self.curLoc].item != None:
-            print("\n Look there's a", locale[self.curLoc].item, "\n")
-            locale[self.curLoc].searched= True
-        else:
+        try:
+            if locale[self.curLoc].item[0] != None:
+                print("\n Look there's a", str(locale[self.curLoc].item), "\n")
+                locale[self.curLoc].searched= True
+
+            else:
+                print("There is nothing here.\n")
+        except:
             print("\nThere is nothing here.\n")
 
          
@@ -61,27 +65,39 @@ class Player:
         
 
     def take(self, locale, items):
-        if locale[self.curLoc].searched:
-            self.inventory.append(locale[self.curLoc].item)
-            
-            print("\n", locale[self.curLoc].item, "has been added to your inventory\n")
-            
-            items[self.curLoc] = None
-            locale[self.curLoc].item = None
+        item = self.cmd[5:].title()
+        locItem = locale[self.curLoc].item
 
-            
+        if locItem != None:
+            if locale[self.curLoc].searched:
+                
+                if item == locItem:
+                    self.inventory[self.curLoc] = locItem
+                    locale[self.curLoc].item = None
+                    print(item, "has been added to your inventory.\n")
+
+                else:
+                    print("There is no", item, "\n")
+            else:
+                print("Search Around.\n")
         else:
             print("There is nothing to take.\n")
+            
+    def drop(self, locale):
 
-
-##    def drop(self, locale):
-##        for index in range(0, 10):
-##
-##            if self.cmd[5:].capitilize() == locale[index].item:
-##                self.inventory.remove(item)
-##                print(item, "has been dropped and removed from your inventory.\n")
-##                locale[index].item = 
-##    
+        item = self.cmd[5:].title()
+        inv = self.inventory 
+        locItem = locale[self.curLoc].item                      
+        if item in self.inventory:
+            if locItem == None:
+                print(item, "has been dropped and removed from your inventory.\n")
+                locItem = item
+                self.inventory[self.curLoc] = None
+                locale[self.curLoc].item = locItem
+            else:
+                print("You can't drop this at the moment.\n")
+        else:
+            print("You don't have a", item)
 
     def describe(self):
         pass
