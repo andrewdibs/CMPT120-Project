@@ -14,17 +14,19 @@ def mainGame():
 
     #Locations list
     longDescript = [
-                "You are at Castle Black. The Night's Watch is preparing \nfor battle."
-            ,   "You are at Winterfell. The Starks welcome you." 
-            ,   "You are at King's Landing. Good luck with Cersei Lannister" 
-            ,   "You are in Dragonstone. Don't piss off the dragons." 
-            ,   "You are on the Iron Islands. Watch out for sharks." 
-            ,   "You are north of the Wall. Watch out for White Walkers."
-            ,   "You are in Highgarden, home of House Tyrell." 
-            ,   "You are at Braavos, the Free city."
-            ,   "You are in a dark eerie Cave. Don't make too much noise."
-            ,   "You are at The Arena, get ready for battle. "
-                    ]
+                "You are at Castle Black. The Night's Watch is preparing \nfor battle. It's extremly cold and tensions are high."
+            ,   "You are at Winterfell. The Starks welcome you. Sansa Stark is the Queen and all of Winterfell is looking for your help." 
+            ,   "You are at King's Landing. Good luck with Cersei Lannister. Home of the Iron Throne. " 
+            ,   "You are in Dragonstone. Don't piss off the dragons. Khalessi, the Mother of Dragons, welcomes you." 
+            ,   "You are on the Iron Islands. Watch out for sharks. Its windy and you don't really know where to go." 
+            ,   "You are north of the Wall. Watch out for White Walkers. The Night King is coming for you. Defeat him to save Westeros"
+            ,   "You are in Highgarden, home of House Tyrell. Careful not to be decieved by anyone." 
+            ,   "You are at Braavos, the Free city. The real question is who really are you?"
+            ,   "You are in a dark eerie Cave. Don't make too much noise. You can see something reflecting light in the distance."
+            ,   "You are at The Arena, get ready for battle. Only a true warrior can make it out alive."
+            ,   "You are at the Veil, one of the most scenic castles in Westeros. I think Little Finger may be up to something."
+            ,   "You are on the Iron Vessel, the largest ship ever known to Westeros. Don't worry you won't get sea sick."
+                ]
 
     shortDescript = [
                 "You are at Castle Black."
@@ -37,10 +39,12 @@ def mainGame():
             ,   "You are in Braavos."
             ,   "You are in a Cave."
             ,   "You are at the Arena."
+            ,   "You are at the Veil."
+            ,   "You are on the Iron Vessel."
 
         ]
 
-    items = [None, "Boat", None, None, "Map", None, None, "Dragon Glass Dagger", "Valyrian Steel Sword", None]
+    items = [None, "Boat", None, None, "Map", None, None, "Dragon Glass Dagger", "Valyrian Steel Sword", None, None,None]
 
     locale= [   Locale("Castle Black",longDescript[0],shortDescript[0], items[0])
             ,   Locale("Winterfell",longDescript[1],shortDescript[1], items[1])
@@ -52,6 +56,8 @@ def mainGame():
             ,   Locale("Braavos",longDescript[7],shortDescript[7], items[7])
             ,   Locale("Cave",longDescript[8],shortDescript[8], items[8])
             ,   Locale("Arena",longDescript[9],shortDescript[9], items[9])
+            ,   Locale("",longDescript[10], shortDescript[10], items[10])
+            ,   Locale("",longDescript[11], shortDescript[11], items[11])
                  ]
 
 
@@ -60,12 +66,14 @@ def mainGame():
             ,    [0,    6,      2,    4   ]  #Winterfell 1
             ,    [3,    7,      None, 1   ]  #KingsLanding 2
             ,    [8,    2,      None, 0   ]  #Dragonstone 3
-            ,    [None, None,   1,    None]  #IronIslands 4
+            ,    [11,   None,   1,    None]  #IronIslands 4
             ,    [None, 0,      None, None]  #NorthWall 5
             ,    [1,    None,   7,    9   ]  #HighGarden 6 
-            ,    [2,    None,   None, 6   ]  #Braavos 7
+            ,    [2,    None,   10,   6   ]  #Braavos 7
             ,    [None, 3,      None, None]  #TheCave 8
             ,    [None, None,   6,    None]  #theArena 9
+            ,    [None, None,   None, 7   ]  #theVeil 10
+            ,    [None, 4,      None, None]  #ironVessel 11
 
         ]
     #Creates Player Object
@@ -90,8 +98,10 @@ def mainGame():
                     "East\n"
                     "West\n\n"
                     "Look Around\n"
-                    "Search\n"
-                    "Take\n\n"
+                    "Search\n\n"
+                    "Take (Item)\n"
+                    "Drop (Item)\n"
+                    "Equip (Item) \n\n"
                     "Menu\n"
                     "Map\n"
                     )
@@ -137,15 +147,18 @@ def mainGame():
         #Winterfell Alliance
         if player.curLoc == 1:
             while locale[1].count == 1:
+
                 sansaQues= input("You are greeted by Sansa Stark..\n Sansa: "+player.name +
                                  ", will you help us win this war?\nYes or no: ").lower()
 
                 if sansaQues == "yes":
                     print("\nWinterfell thanks you. We will win this together.")
                     player.score += 5
+                    locale[1].count += 1
                     break
                 elif sansaQues == "no":
                     print("\nJust remember who the real enemy is..")
+                    locale[1].count += 1
                     break
             
  
@@ -250,21 +263,21 @@ def setCharacter():
     return character
 
 def showMap():
-    print(  " ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"
+    print(     "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"
               "<                                                          >\n"
               "<                       North Wall                         >\n"
               "<                            *                             >\n"
               "<                            *            The Cave         >\n"
               "<                            *               *             >\n"
               "<                      Castle Black-----DragonStone        >\n"
-              "<                            *               *             >\n"
-              "<                            *               *             >\n"
-              "<                            *               *             >\n"
+              "<     Iron Vessel            *               *             >\n"
+              "<            *               *               *             >\n"
+              "<            *               *               *             >\n"
               "<      IronIslands------Winterfell------KingsLanding       >\n"
               "<                            *               *             >\n"
               "<                            *               *             >\n"
               "<                            *               *             >\n"
-              "<        The Arena------HighGarden--------Braavos          >\n"
+              "<        The Arena------HighGarden--------Braavos----Veil  >\n"
               "<                                                          >\n"
               "<                                                          >\n"
               " vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv\n")
