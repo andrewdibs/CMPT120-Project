@@ -25,7 +25,7 @@ def mainGame():
             ,   "You are in a dark eerie Cave. Don't make too much noise. You can see something reflecting light in the distance."
             ,   "You are at The Arena, get ready for battle. Only a true warrior can make it out alive."
             ,   "You are at the Veil, one of the most scenic castles in Westeros. I think Little Finger may be up to something."
-            ,   "You are on the Iron Vessel, the largest ship ever known to Westeros. Don't worry you won't get sea sick."
+            ,   "You are docked on the Iron Vessel, the largest ship ever known to Westeros. Don't worry you won't get sea sick."
                 ]
 
     shortDescript = [
@@ -139,6 +139,11 @@ def mainGame():
         elif player.cmd[0:4] == "drop":
             player.drop(locale)
             continue
+
+        elif player.cmd[0:5] == "equip":
+            player.equipItem()
+            continue
+            
         
         #Moves player
         elif player.cmd== "north" or player.cmd == "south" or player.cmd == "east" or player.cmd == "west":
@@ -270,8 +275,8 @@ def showMap():
               "<                            *            The Cave         >\n"
               "<                            *               *             >\n"
               "<                      Castle Black-----DragonStone        >\n"
-              "<     Iron Vessel            *               *             >\n"
-              "<            *               *               *             >\n"
+              "<                            *               *             >\n"
+              "<      Iron Vessel           *               *             >\n"
               "<            *               *               *             >\n"
               "<      IronIslands------Winterfell------KingsLanding       >\n"
               "<                            *               *             >\n"

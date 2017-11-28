@@ -13,6 +13,7 @@ class Player:
         self.curLoc = 0
         self.cmd = ""
         self.score = 0
+        self.curItem = ""
         
     def move(self, world, locale):
         
@@ -28,7 +29,15 @@ class Player:
 
         newLoc = world[self.curLoc][numDirect]
 
-        if newLoc is None:
+        if newLoc == 4:
+            if "Boat" == self.curItem:
+                self.curLoc = newLoc
+                locale[self.curLoc].count += 1
+                locale[self.curLoc].visited = True
+            else:
+                print("You need a boat to go there.")
+        
+        elif newLoc is None:
             print("Wrong Way.\n")
 
         else:
@@ -99,12 +108,20 @@ class Player:
         else:
             print("You don't have a", item)
 
+    def equipItem(self):
+
+        item = self.cmd[6:].title()
+        if item in self.inventory:
+            self.curItem = item
+            print(item, "has been equiped.\n")
+
+        else:
+            print("You don't have", item ,"\n")
+
     def describe(self):
         pass
 
 
-    def attack(self):
-        pass
 
 class Locale:
 
