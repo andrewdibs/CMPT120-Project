@@ -8,10 +8,6 @@ from classesZork import Player, Locale
 
 def mainGame():
 
-    #Global Variables 
-
-    battle= False
-
     #Locations list
     longDescript = [
                 "You are at Castle Black. The Night's Watch is preparing \nfor battle. It's extremly cold and tensions are high."
@@ -44,7 +40,7 @@ def mainGame():
 
         ]
 
-    items = [None, "Boat", None, None, "Map", None, None, "Dragon Glass Dagger", "Valyrian Steel Sword", None, None,None]
+    items = ["Map", "Needle Sword", "Oathkeeper Sword", None, None, None, "Boat", "Dragon Glass Dagger", "Valyrian Steel Sword", None, None,None]
 
     locale= [   Locale("Castle Black",longDescript[0],shortDescript[0], items[0])
             ,   Locale("Winterfell",longDescript[1],shortDescript[1], items[1])
@@ -56,8 +52,8 @@ def mainGame():
             ,   Locale("Braavos",longDescript[7],shortDescript[7], items[7])
             ,   Locale("Cave",longDescript[8],shortDescript[8], items[8])
             ,   Locale("Arena",longDescript[9],shortDescript[9], items[9])
-            ,   Locale("",longDescript[10], shortDescript[10], items[10])
-            ,   Locale("",longDescript[11], shortDescript[11], items[11])
+            ,   Locale("The Veil",longDescript[10], shortDescript[10], items[10])
+            ,   Locale("The Iron Vessel",longDescript[11], shortDescript[11], items[11])
                  ]
 
 
@@ -77,8 +73,9 @@ def mainGame():
 
         ]
     #Creates Player Object
-    player = Player(setCharacter(), setDifficulty())
-
+    player = Player(setCharacter())
+    player.setAttributes()
+    player.setDifficulty()
     
     while True:
 
@@ -116,7 +113,7 @@ def mainGame():
 
         #Shows location Description 
         elif player.cmd[0:4] == "look":
-            lookAround()
+            player.describe(locale)
             continue
 
         elif player.cmd == "search":
@@ -148,59 +145,28 @@ def mainGame():
         #Moves player
         elif player.cmd== "north" or player.cmd == "south" or player.cmd == "east" or player.cmd == "west":
             player.move(world,locale)
+
+            
             
         #Winterfell Alliance
         if player.curLoc == 1:
-            while locale[1].count == 1:
+            locale[player.curLoc].winterfell(player)
 
-                sansaQues= input("You are greeted by Sansa Stark..\n Sansa: "+player.name +
-                                 ", will you help us win this war?\nYes or no: ").lower()
-
-                if sansaQues == "yes":
-                    print("\nWinterfell thanks you. We will win this together.")
-                    player.score += 5
-                    locale[1].count += 1
-                    break
-                elif sansaQues == "no":
-                    print("\nJust remember who the real enemy is..")
-                    locale[1].count += 1
-                    break
-            
- 
+        #Hound
         if player.curLoc == 9:
-            if battle == False:
-                while True:
-                    response = input("The Hound challenges you to battle.\n"
-                                      "Do you accept? Yes/No: ")
-                    if response == "yes":
-                        if "Valyrian Steel Sword" in player.inventory:
-                            print("\n You used your sword to take down the hound.\n")
-                            
-                            player.inventory.append("Armor")
-                            print("You took the Hounds armor.\n\n"
-                                  "Armor has been added to your inventory.")
-                            battle = True
-                            break
+            if locale[player.curLoc].hound == False:
+                locale[player.curLoc].houndBattle(player)
 
-                        else:
-                            print("\nYou were killed by the Hound.")
-                            conclusion()
-                            sys.exit()
-                    
 
-                    elif response == "no":
-                        print("Hound: AHAHA, come back when your ready to fight.")
-                        break
-                    
         #North of Wall
         if player.curLoc == 5:
 
             if "Armor" in player.inventory and "Valyrian Steel Sword" in player.inventory:
-                winGame()
+                player.winGame()
                 break
                 
             else:
-                loseGame()
+                player.loseGame()
                 break
 
 
@@ -286,41 +252,9 @@ def showMap():
               "<                                                          >\n"
               "<                                                          >\n"
               " vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv\n")
-              
-
-       
-
-def setDifficulty():
-    while True:
-        cmd = input("Please Select Difficulty:\n"
-                    "Easy\n"
-                    "Medium\n"
-                    "Hard\n"
-                    "Realistic\n"
-                    ">>:").lower()
-        if cmd == "easy":
-            return 100
-        elif cmd[0:3] == "med":
-            return 75
-        elif cmd == "hard":
-            return 50
-        elif cmd[0:4] == "real":
-            return 25
-        else:
-            print("Invalid command\n")
+            
 
 
-def loseGame():
-    print("You were killed by White Walkers and Westeros has been overrun..")
-    
-        
-def winGame():
-    print("You took down the Night King and the undead Army!!!")
-    
-    
-def conclusion():
-    print(    "\n==\n"
-              "Copyright (c) Andrew DiBella       Andrew.DiBella1@marist.edu")
 
 def main():
     #Stack

@@ -1,19 +1,79 @@
 #classesZork.py
 #Author Andrew DiBella
 #Date 24 November 2017
-
+import sys
+from random import randint
 class Player:
 
 
-    def __init__(self, name, moves ):
+    def __init__(self, name):
         
         self.name = name
-        self.moves = moves
         self.inventory = [None,None,None,None,None,None,None,None,None,None,None,None]
         self.curLoc = 0
         self.cmd = ""
         self.score = 0
         self.curItem = ""
+        self.strength = 0
+        self.health = 0
+        self.charisma = 0
+        self.swiftness = 0
+
+    def setDifficulty(self):
+        while True:
+            cmd = input("Please Select Difficulty:\n"
+                        "Easy\n"
+                        "Medium\n"
+                        "Hard\n"
+                        "Realistic\n"
+                        ">>:").lower()
+            if cmd == "easy":
+                self.moves = 100
+                self.numDifficulty= randint(0,50)
+                break
+            elif cmd[0:3] == "med":
+                self.moves = 75
+                self.numDifficulty= randint(50,100)
+                break
+            elif cmd == "hard":
+                self.moves = 50
+                self.numDifficulty= randint(100,150)
+                break
+            elif cmd[0:4] == "real":
+                self.moves = 25
+                self.numDifficulty= randint(150,200)
+                break
+            else:
+                print("Invalid command\n") 
+
+        
+    def setAttributes(self):
+        if self.name == "Jon Snow":
+            self.strength = 95
+            self.swiftness = 55
+            self.charisma = 20
+            self.health = 50
+
+        elif self.name == "Arya":
+            self.strength = 40
+            self.swiftness = 95
+            self.charisma = 55
+            self.health = 50
+
+        elif self.name == "Tyrion":
+            self.strength = 35
+            self.swiftness = 60
+            self.charisma = 95
+            self.health = 50
+
+        elif self.name == "Jaime":
+            self.strength = 60
+            self.swiftness = 50
+            self.charisma = 65
+            self.health = 50
+        
+        
+        
         
     def move(self, world, locale):
         
@@ -69,7 +129,12 @@ class Player:
                  "\nScore:" + str(self.score)+
                  "\nMoves Remaining: "+ str(self.moves) +
                  "\nCurrent Location: "+ locale[self.curLoc].afterVisit+
-                 "\nInventory:"+ str(self.inventory) + "\n\n")
+                 "\nInventory: "+ str(self.inventory) + 
+                 "\nHealth: " +str(self.health)+
+                 "\nStrength: "+str(self.strength)+
+                 "\nSwiftness: " + str(self.swiftness)+
+                 "\nCharisma: "+str(self.charisma)
+               )
         
         
 
@@ -118,9 +183,20 @@ class Player:
         else:
             print("You don't have", item ,"\n")
 
-    def describe(self):
-        pass
+    def describe(self, locale):
+        print(locale[self.curLoc].beforeVisit)
 
+    def loseGame(self):
+        print("You were killed by White Walkers and Westeros has been overrun..")
+    
+        
+    def winGame(self):
+        print("You took down the Night King and the undead Army!!!")
+    
+    
+    def conclusion(self):
+        print(    "\n==\n"
+              "Copyright (c) Andrew DiBella       Andrew.DiBella1@marist.edu")
 
 
 class Locale:
@@ -134,3 +210,72 @@ class Locale:
         self.count = 0
         self.visited = False
         self.searched = False
+        self.hound = False
+
+
+
+    def winterfell(self,player):
+        while self.count == 1:
+
+            sansaQues= input("You are greeted by Sansa Stark..\n Sansa: "+player.name +
+                                 ", will you help us win this war?\nYes or no: ").lower()
+
+            if sansaQues == "yes":
+                print("\nWinterfell thanks you. We will win this together.")
+                player.score += 5
+                self.count += 1
+                break
+            elif sansaQues == "no":
+                print("\nJust remember who the real enemy is..")
+                self.count += 1
+                break
+            
+    def houndBattle(self, player):
+        def winBattle():
+            print("\n You used your", player.curItem,"to take down the hound.\n")
+            player.inventory.append("Armor")
+            print("You took the Hounds armor.\n\n"
+                    "Armor has been added to your inventory.")
+            self.hound = True
+
+        
+        while True:
+            response = input("The Hound challenges you to battle.\n"
+                              "Do you accept? Yes/No: ")
+            if response == "yes":
+                if "Valyrian Steel Sword" == player.curItem and player.name == "Jon Snow":
+                    winBattle()
+                    break
+
+                elif "Needle Sword" == player.curItem and player.name == "Arya":
+                    winBattle()
+                    break
+
+                elif "Dragon Glass Dagger" == player.curItem and player.name == "Tyrion":
+                    winBattle()
+                    break
+
+                elif "Oathkeeper Sword" == player.curItem and player.name == "Jaime":
+                    winBattle()
+                    break
+
+                elif player.strength + player.swiftness > player.numDifficulty:
+                    winBattle()
+                    break
+                else:
+                    print("\nYou were killed by the Hound.")
+                    player.conclusion()
+                    sys.exit()
+            
+
+            elif response == "no":
+                print("Hound: AHAHA, come back when your ready to fight.")
+                break
+            
+
+
+
+
+
+
+        
