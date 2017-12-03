@@ -2,7 +2,7 @@
 #Author Andrew DiBella
 #Date: 24 November 2017
 
-import sys
+
 from classesZork import Player, Locale
 
 
@@ -160,15 +160,7 @@ def mainGame():
 
         #North of Wall
         if player.curLoc == 5:
-
-            if "Armor" in player.inventory and "Valyrian Steel Sword" in player.inventory:
-                player.winGame()
-                break
-                
-            else:
-                player.loseGame()
-                break
-
+            locale[player.curLoc].finalBattle(player, locale)
 
         elif player.cmd != "north" and player.cmd != "south" and player.cmd != "east" and player.cmd!= "west": 
             print("Invalid command.")
@@ -260,7 +252,7 @@ def main():
     #Stack
     titleIntro()
     mainGame()
-    conclusion()
+    player.conclusion()
 
 
 main()
