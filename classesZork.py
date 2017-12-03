@@ -50,31 +50,31 @@ class Player:
         
     def setAttributes(self):
         if self.name == "Jon Snow":
-            self.strength = 95
+            self.strength = 80
             self.swiftness = 55
             self.charisma = 20
-            self.health = 50
+            self.health = 25
             self.curLoc = 0
 
         elif self.name == "Arya":
             self.strength = 40
-            self.swiftness = 95
+            self.swiftness = 80
             self.charisma = 55
-            self.health = 50
+            self.health = 25
             self.curLoc = 1
 
         elif self.name == "Tyrion":
             self.strength = 35
             self.swiftness = 60
             self.charisma = 95
-            self.health = 50
+            self.health = 25
             self.curLoc = 3
 
         elif self.name == "Jaime":
             self.strength = 60
             self.swiftness = 50
-            self.charisma = 65
-            self.health = 50
+            self.charisma = 70
+            self.health = 25
             self.curLoc = 2
         
         
@@ -170,7 +170,10 @@ class Player:
             if locItem == None:
                 print(item, "has been dropped and removed from your inventory.\n")
                 locItem = item
-                self.inventory[self.curLoc] = None
+                try:
+                    self.inventory[self.curLoc] = None
+                except:
+                    self.inventory.remove(item)
                 locale[self.curLoc].item = locItem
             else:
                 print("You can't drop this at the moment.\n")
@@ -225,8 +228,11 @@ class Locale:
                                  ", will you help us win this war?\nYes or no: ").lower()
 
             if sansaQues == "yes":
-                print("\nWinterfell thanks you. We will win this together.")
+                print("\nWinterfell thanks you. We will win this together.Take this letter to"
+                      "the Iron Vessel. Drop it there. It will be shipped to Casterly rock to discuss"
+                      "how we will defeat the Undead Army. The Lannisters are essential to win this battle.")
                 player.score += 5
+                player.inventory.append("Letter")
                 self.count += 1
                 break
             elif sansaQues == "no":
@@ -239,7 +245,7 @@ class Locale:
             print("\n You used your", player.curItem,"to take down the hound.\n")
             player.inventory.append("Armor")
             print("You took the Hounds armor.\n\n"
-                    "Armor has been added to your inventory.")
+                  "Armor has been added to your inventory.")
             self.hound = True
 
         
@@ -277,9 +283,52 @@ class Locale:
                 break
             
 
+    def finalBattle(self,player, locale):
+        print(player.name,"you've come this far..Face to face with the Night King.Prepare for battle!\n")
+
+        if "Letter" == locale[11].item:
+                print("\nThe House of the Starks and the Lannisters are here to help you")
+                player.strength += 15
+                
+        print("Press enter to attack.")
+        for i in range(randint(5,15)):
+            attack = input("Attack")
+
+        if "Armor" in player.inventory:
+            
+            if "Valyrian Steel Sword" == player.curItem and player.name == "Jon Snow":
+                player.winGame()
+                player.conclusion()
+                sys.exit()
+                
+
+            elif "Needle Sword" == player.curItem and player.name == "Arya":
+                player.winGame()
+                player.conclusion()
+                sys.exit()
+                
+
+            elif "Dragon Glass Dagger" == player.curItem and player.name == "Tyrion":
+                player.winGame()
+                player.conclusion()
+                sys.exit()
+
+            elif "Oathkeeper Sword" == player.curItem and player.name == "Jaime":
+                player.winGame()
+                player.conclusion()
+                sys.exit()
+
+            elif player.strength + player.swiftness + player.health > player.numDifficulty + 30:
+                player.winGame()
+                player.conclusion()
+                sys.exit()
 
 
-
+        else:
+            player.loseGame()
+            player.conclusion()
+            
+            
 
 
         
