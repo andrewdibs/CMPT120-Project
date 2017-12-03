@@ -1,6 +1,7 @@
 #classesZork.py
 #Author Andrew DiBella
 #Date 24 November 2017
+
 import sys
 from random import randint
 class Player:
@@ -53,25 +54,28 @@ class Player:
             self.swiftness = 55
             self.charisma = 20
             self.health = 50
+            self.curLoc = 0
 
         elif self.name == "Arya":
             self.strength = 40
             self.swiftness = 95
             self.charisma = 55
             self.health = 50
+            self.curLoc = 1
 
         elif self.name == "Tyrion":
             self.strength = 35
             self.swiftness = 60
             self.charisma = 95
             self.health = 50
+            self.curLoc = 3
 
         elif self.name == "Jaime":
             self.strength = 60
             self.swiftness = 50
             self.charisma = 65
             self.health = 50
-        
+            self.curLoc = 2
         
         
         
