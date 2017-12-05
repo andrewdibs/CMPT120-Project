@@ -170,10 +170,9 @@ class Player:
             if locItem == None:
                 print(item, "has been dropped and removed from your inventory.\n")
                 locItem = item
-                try:
-                    self.inventory[self.curLoc] = None
-                except:
-                    self.inventory.remove(item)
+            
+                index= self.inventory.index(item)
+                self.inventory[index] = None
                 locale[self.curLoc].item = locItem
             else:
                 print("You can't drop this at the moment.\n")
