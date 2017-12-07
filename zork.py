@@ -1,105 +1,93 @@
-#Zork Version0.7
+#Zork Version0.9
 #Author Andrew DiBella
-#Date: 15 Oct 2017
+#Date: 24 November 2017
+
+
+from classesZork import Player, Locale
 import sys
-score = 0
-curLocation = ""
-hasBeenThere = []
-locDescript = []
-countHasBeen = []
-searched = []
-items = []
-locale = []
-world = []
-inventory = []
-locIndex = 0
-battle = False
+
+
 def mainGame():
 
-    #Global Variables 
-    global score
-    global curLocation
-    global hasBeenThere 
-    global locDescript 
-    global countHasBeen
-    global searched
-    global locale
-    global world
-    global locIndex
-    global items
-    global inventory
-    global battle
-
     #Locations list
-    locDescript = [
-                "You are at Castle Black. The Night's Watch is preparing \nfor battle."
-            ,   "You are at Winterfell. The Starks welcome you." 
-            ,   "You are at King's Landing. Good luck with Cersei Lannister" 
-            ,   "You are in Dragonstone. Don't piss off the dragons." 
-            ,   "You are on the Iron Islands. Watch out for sharks." 
-            ,   "You are north of the Wall. Watch out for White Walkers."
-            ,   "You are in Highgarden, home of House Tyrell." 
-            ,   "You are at Braavos, the Free city."
-            ,   "You are in a dark eerie Cave."
-            ,   "You are at The Arena, get ready for battle. "
-                    ]
+    longDescript = [
+                "You are at Castle Black. The Night's Watch is preparing \nfor battle. It's extremly cold and tensions are high."
+            ,   "You are at Winterfell. The Starks welcome you. Sansa Stark is the Queen and all of Winterfell is looking for your help." 
+            ,   "You are at King's Landing. Good luck with Cersei Lannister. Home of the Iron Throne. " 
+            ,   "You are in Dragonstone. Don't piss off the dragons. Khalessi, the Mother of Dragons, welcomes you." 
+            ,   "You are on the Iron Islands. Watch out for sharks. Its windy and you don't really know where to go." 
+            ,   "You are north of the Wall. Watch out for White Walkers. The Night King is coming for you. Defeat him to save Westeros"
+            ,   "You are in Highgarden, home of House Tyrell. Careful not to be decieved by anyone." 
+            ,   "You are at Braavos, the Free city. The real question is who really are you?"
+            ,   "You are in a dark eerie Cave. Don't make too much noise. You can see something reflecting light in the distance."
+            ,   "You are at The Arena, get ready for battle. Only a true warrior can make it out alive."
+            ,   "You are at the Veil, one of the most scenic castles in Westeros. I think Little Finger may be up to something."
+            ,   "You are docked on the Iron Vessel, the largest ship ever known to Westeros. Don't worry you won't get sea sick."
+                ]
 
-    locale = ["Castle Black", "Winterfell", "Kings Landing", "Dragonstone",
-                "Iron Islands", "North of Wall", "High Garden", "Braavos",
-                "The Cave", "The Arena" ]
+    shortDescript = [
+                "You are at Castle Black."
+            ,   "You are at Winterfell."
+            ,   "You are at King's Landing."
+            ,   "You are in Dragonstone."
+            ,   "You are on the Iron Islands."
+            ,   "You are north of the Wall."
+            ,   "You are in Highgarden."
+            ,   "You are in Braavos."
+            ,   "You are in a Cave."
+            ,   "You are at the Arena."
+            ,   "You are at the Veil."
+            ,   "You are on the Iron Vessel."
 
-    searched = [False, False, False, False, False, False, False, False, False, False]
+        ]
 
-    items = [None, None, None, None, "Map", None, None, None, "Valyrian Steel Sword", "Armor"]
+    items = ["Map", "Needle Sword", "Oathkeeper Sword", None, None, None, "Boat", "Dragon Glass Dagger", "Valyrian Steel Sword", None, None,None]
 
-    inventory = []
-    #Boolean Variables
-    hasBeenThere = [     #### LIST KEY #####
-                                
-                    False    #CasBlack[0]
-                ,   False   #Winterfell[1]
-                ,   False   #KingsLanding[2]
-                ,   False   #Dragonstone[3]
-                ,   False   #IronIslands[4]
-                ,   False   #NorthWall[5]
-                ,   False   #HighGarden[6]
-                ,   False   #Braavos[7]
-                ,   False   #TheCave[8]
-                ,   False   #theArena[9]
-                    ]
+    locale= [   Locale("Castle Black",longDescript[0],shortDescript[0], items[0])
+            ,   Locale("Winterfell",longDescript[1],shortDescript[1], items[1])
+            ,   Locale("King's Landing",longDescript[2],shortDescript[2], items[2])
+            ,   Locale("Dragonstone",longDescript[3],shortDescript[3], items[3])
+            ,   Locale("Iron Islands",longDescript[4],shortDescript[4], items[4])
+            ,   Locale("North Wall",longDescript[5],shortDescript[5], items[5])
+            ,   Locale("Highgarden",longDescript[6],shortDescript[6], items[6])
+            ,   Locale("Braavos",longDescript[7],shortDescript[7], items[7])
+            ,   Locale("Cave",longDescript[8],shortDescript[8], items[8])
+            ,   Locale("Arena",longDescript[9],shortDescript[9], items[9])
+            ,   Locale("The Veil",longDescript[10], shortDescript[10], items[10])
+            ,   Locale("The Iron Vessel",longDescript[11], shortDescript[11], items[11])
+                 ]
 
-    #Number of times each location has been visited
-    countHasBeen = [0,0,0,0,0,0,0,0,0,0]
 
                 #north  #south  #east #west
     world =    [ [5,    1,      3,    None]  #CasBlack 0 
             ,    [0,    6,      2,    4   ]  #Winterfell 1
             ,    [3,    7,      None, 1   ]  #KingsLanding 2
             ,    [8,    2,      None, 0   ]  #Dragonstone 3
-            ,    [None, None,   1,    None]  #IronIslands 4
+            ,    [11,   None,   1,    None]  #IronIslands 4
             ,    [None, 0,      None, None]  #NorthWall 5
             ,    [1,    None,   7,    9   ]  #HighGarden 6 
-            ,    [2,    None,   None, 6   ]  #Braavos 7
+            ,    [2,    None,   10,   6   ]  #Braavos 7
             ,    [None, 3,      None, None]  #TheCave 8
             ,    [None, None,   6,    None]  #theArena 9
+            ,    [None, None,   None, 7   ]  #theVeil 10
+            ,    [None, 4,      None, None]  #ironVessel 11
 
         ]
+    #Creates Player Object
+    player = Player(setCharacter())
+    player.setAttributes()
+    player.setDifficulty()
     
-    moves = setDifficulty()
-    curLocation = locale[0]
-    character = ""
-
-    character = setCharacter()          
     while True:
 
-        if countHasBeen[0] == 0:
-                print(character,"!!!WAKE UP! We have to get the hell out "
+        if locale[0].count == 0:
+                print(player.name.upper(),"!!!WAKE UP! We have to get the hell out "
                       "of here. Where should we go?")
-                countHasBeen[0] += 1
+                locale[0].count += 1
                     
-        cmd = input("Enter Command: ").lower()
+        player.cmd = input("Enter Command: ").lower()
             
-        if cmd == "help":
+        if player.cmd == "help":
             print("Possible commands:\n"
                     "Help\n"
                     "Quit\n\n"
@@ -108,109 +96,98 @@ def mainGame():
                     "East\n"
                     "West\n\n"
                     "Look Around\n"
-                    "Search\n"
-                    "Take\n\n"
+                    "Search\n\n"
+                    "Take (Item)\n"
+                    "Drop (Item)\n"
+                    "Equip (Item) \n\n"
                     "Menu\n"
+                    "Inventory\n"
                     "Map\n"
                     )
             continue
             
-        elif cmd == "quit":
+        elif player.cmd == "quit":
             exit()
 
-        elif cmd == "menu":
-            print(showMenu(score, character, moves, curLocation))
+        elif player.cmd == "inventory":
+            player.showInventory()
+            continue
+
+        elif player.cmd == "menu":
+            player.displayMenu(locale)
             continue
 
         #Shows location Description 
-        elif cmd[0:4] == "look":
-            lookAround()
+        elif player.cmd[0:4] == "look":
+            player.describe(locale)
             continue
 
-        elif cmd == "search":
-            searchArea()
+        elif player.cmd == "search":
+            player.search(locale)
             continue
         
         #Displays map
-        elif cmd == "map":
-            if "Map" in inventory:
+        elif player.cmd == "map":
+            if "Map" in player.inventory:
                 showMap()
                 continue
             else:
                 print("\n You don't have a map.\n")
                 continue
 
-        elif cmd == "take":
-            takeItem(locIndex)
+        elif player.cmd[0:4] == "take":
+            player.take(locale, items)
             continue
+
+        elif player.cmd[0:4] == "drop":
+            player.drop(locale)
+            continue
+
+        elif player.cmd[0:5] == "equip":
+            player.equipItem()
+            continue
+            
         
         #Moves player
-        elif cmd== "north" or cmd == "south" or cmd == "east" or cmd == "west":
-            whereTo(locIndex, cmd)
+        elif player.cmd== "north" or player.cmd == "south" or player.cmd == "east" or player.cmd == "west":
+            player.move(world,locale)
 
-        #Winterfell Alliance
-        if curLocation == locale[1]:
-            while countHasBeen[1] == 1:
-                sansaQues= input("You are greeted by Sansa Stark..\n Sansa: "+character +
-                                 ", will you help us win this war?\nYes or no: ").lower()
-
-                if sansaQues == "yes":
-                    print("\nWinterfell thanks you. We will win this together.")
-                    score += 5
-                    break
-                elif sansaQues == "no":
-                    print("\nJust remember who the real enemy is..")
-                    break
             
- 
-        if curLocation == locale[9]:
-            if battle == False:
-                while True:
-                    response = input("The Hound challenges you to battle.\n"
-                                      "Do you accept? Yes/No: ")
-                    if response == "yes":
-                        if "Valyrian Steel Sword" in inventory:
-                            print("\n You used your sword to take down the hound.\n")
-                            
-                            inventory.append(items[9])
-                            print("You took the Hounds armor.\n\n"
-                                  "Armor has been added to your inventory.")
-                            battle = True
-                            break
+            
+        #Winterfell Alliance
+        if player.curLoc == 1:
+            locale[player.curLoc].winterfell(player)
 
-                        else:
-                            print("\nYou were killed by the Hound.")
-                            conclusion()
-                            sys.exit()
-                    
+        #Hound
+        if player.curLoc == 9:
+            if locale[player.curLoc].hound == False:
+                locale[player.curLoc].houndBattle(player)
 
-                    elif response == "no":
-                        print("Hound: AHAHA, come back when your ready to fight.")
-                        break
-                    
+
         #North of Wall
-        if curLocation == locale[5]:
+        if player.curLoc == 5:
+            locale[player.curLoc].finalBattle(player, locale)
+            cmd = input("\n\nWould you like to play again?\n"
+                        "Yes/No: ").lower()
+            if cmd == "yes":
+                titleIntro()
+                mainGame()
 
-            if "Valyrian Steel Sword" in inventory and "Armor" in inventory:
-                winGame()
-                break
-                
             else:
-                loseGame()
-                break
+                print("Thanks for playing!")
+                sys.exit()
 
-
-        elif cmd != "north" and cmd != "south" and cmd != "east" and cmd!= "west": 
+        elif player.cmd != "north" and player.cmd != "south" and player.cmd != "east" and player.cmd!= "west": 
             print("Invalid command.")
 
-        if countHasBeen[locIndex] == 1:
-            print("\n",locDescript[locIndex], "\n")
+        if locale[player.curLoc].count == 1:
+            print("\n",locale[player.curLoc].beforeVisit, "\n")
         else:
-            print("\n", curLocation, "\n")
+            print("\n", locale[player.curLoc].afterVisit, "\n")
 
-        moves -= 1
+        player.moves -= 1
 
-        if moves <0 :
+        if player.moves <0 :
             print("You used all of your moves.")
             loseGame()
             break
@@ -263,18 +240,8 @@ def setCharacter():
 
     return character
 
-def showMenu(score, character ,moves, curLocation):
-
-    menu = ( "\n\n\t\t\tMain Menu\n"
-                 "\t\t   ==================\n"+character+
-                 "\nScore:" + str(score) +
-                 "\nMoves Remaining: "+ str(moves) +
-                 "\nCurrent Location: "+ curLocation+
-                 "\nInventory:"+ str(inventory) + "\n\n")
-    return menu
-
 def showMap():
-    print(  " ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"
+    print(     "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"
               "<                                                          >\n"
               "<                       North Wall                         >\n"
               "<                            *                             >\n"
@@ -282,122 +249,25 @@ def showMap():
               "<                            *               *             >\n"
               "<                      Castle Black-----DragonStone        >\n"
               "<                            *               *             >\n"
-              "<                            *               *             >\n"
-              "<                            *               *             >\n"
+              "<      Iron Vessel           *               *             >\n"
+              "<            *               *               *             >\n"
               "<      IronIslands------Winterfell------KingsLanding       >\n"
               "<                            *               *             >\n"
               "<                            *               *             >\n"
               "<                            *               *             >\n"
-              "<        The Arena------HighGarden--------Braavos          >\n"
+              "<        The Arena------HighGarden--------Braavos----Veil  >\n"
               "<                                                          >\n"
               "<                                                          >\n"
               " vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv\n")
-              
-          
-
-def goTo(i):
-    global curLocation
-    global score
-    global hasBeenThere
-    global countHasBeen
-    global locale
-    
-    curLocation = locale[i]
-  
-    if not hasBeenThere[i]:
-        score += 5
-
-    hasBeenThere[i] = True
-    countHasBeen[i] += 1
-
-def whereTo(curLocation, direct):
-    global world
-    global locIndex
-
-    numDirect= None
-    if direct == "north":
-        numDirect = 0
-    elif direct == "south":
-        numDirect = 1
-    elif direct == "east":
-        numDirect = 2
-    elif direct == "west":
-        numDirect = 3
-
-    newLoc = world[curLocation][numDirect]
-    
-
-    if newLoc is None:
-        print("Wrong Way.\n")
-
-    else:
-        locIndex= newLoc
-        goTo(newLoc)
-        
-
-       
-
-def setDifficulty():
-    while True:
-        cmd = input("Please Select Difficulty:\n"
-                    "Easy\n"
-                    "Medium\n"
-                    "Hard\n"
-                    "Realistic\n"
-                    ">>:").lower()
-        if cmd == "easy":
-            return 100
-        elif cmd[0:3] == "med":
-            return 75
-        elif cmd == "hard":
-            return 50
-        elif cmd[0:4] == "real":
-            return 25
-        else:
-            print("Invalid command\n")
-
-def lookAround():
-    print("\n", locDescript[locIndex], "\n")
-
-def takeItem(locIndex):
-    if searched[locIndex]:
-        inventory.append(items[locIndex])
-        print("\n",items[locIndex], "has been added to your inventory.\n")
-
-    else:
-        print("\nDon't see anything to take.\n")
+            
 
 
-
-        
-def searchArea():
-    global items
-    global searched
-    global locIndex
-    
-    if items[locIndex] != None:
-        print("\n Look there's a", items[locIndex],"\n")
-        searched[locIndex] = True
-
-    else:
-        print("\n There is nothing here.\n")
-def loseGame():
-    print("You were killed by White Walkers and Westeros has been overrun..")
-    
-        
-def winGame():
-    print("You took down the Night King and the undead Army!!!")
-    
-    
-def conclusion():
-    print(    "\n==\n"
-              "Copyright (c) Andrew DiBella       Andrew.DiBella1@marist.edu")
 
 def main():
     #Stack
     titleIntro()
     mainGame()
-    conclusion()
+
 
 
 main()
