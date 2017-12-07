@@ -307,29 +307,29 @@ class Locale:
             if "Valyrian Steel Sword" == player.curItem and player.name == "Jon Snow":
                 player.winGame()
                 player.conclusion()
-                sys.exit()
+                
                 
 
             elif "Needle Sword" == player.curItem and player.name == "Arya":
                 player.winGame()
                 player.conclusion()
-                sys.exit()
+                
                 
 
             elif "Dragon Glass Dagger" == player.curItem and player.name == "Tyrion":
                 player.winGame()
                 player.conclusion()
-                sys.exit()
+                
 
             elif "Oathkeeper Sword" == player.curItem and player.name == "Jaime":
                 player.winGame()
                 player.conclusion()
-                sys.exit()
+                
 
             elif player.strength + player.swiftness + player.health > player.numDifficulty + 30:
                 player.winGame()
                 player.conclusion()
-                sys.exit()
+                
 
 
         else:

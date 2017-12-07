@@ -4,6 +4,7 @@
 
 
 from classesZork import Player, Locale
+import sys
 
 
 def mainGame():
@@ -166,6 +167,15 @@ def mainGame():
         #North of Wall
         if player.curLoc == 5:
             locale[player.curLoc].finalBattle(player, locale)
+            cmd = input("\n\nWould you like to play again?\n"
+                        "Yes/No: ").lower()
+            if cmd == "yes":
+                titleIntro()
+                mainGame()
+
+            else:
+                print("Thanks for playing!")
+                sys.exit()
 
         elif player.cmd != "north" and player.cmd != "south" and player.cmd != "east" and player.cmd!= "west": 
             print("Invalid command.")
@@ -257,7 +267,7 @@ def main():
     #Stack
     titleIntro()
     mainGame()
-    player.conclusion()
+
 
 
 main()
