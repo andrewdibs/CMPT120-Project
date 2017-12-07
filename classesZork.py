@@ -133,12 +133,12 @@ class Player:
                  "\nScore:" + str(self.score)+
                  "\nMoves Remaining: "+ str(self.moves) +
                  "\nCurrent Location: "+ locale[self.curLoc].afterVisit+
-                 "\nInventory: "+ str(self.inventory) + 
                  "\nHealth: " +str(self.health)+
                  "\nStrength: "+str(self.strength)+
                  "\nSwiftness: " + str(self.swiftness)+
                  "\nCharisma: "+str(self.charisma)
                )
+        self.showInventory()
         
         
 
@@ -188,6 +188,15 @@ class Player:
 
         else:
             print("You don't have", item ,"\n")
+
+    def showInventory(self):
+        print("\nInventory:")
+        for item in self.inventory:
+            if item != None:
+                print(item)
+
+        print("\n")
+        
 
     def describe(self, locale):
         print(locale[self.curLoc].beforeVisit)

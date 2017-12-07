@@ -100,12 +100,17 @@ def mainGame():
                     "Drop (Item)\n"
                     "Equip (Item) \n\n"
                     "Menu\n"
+                    "Inventory\n"
                     "Map\n"
                     )
             continue
             
         elif player.cmd == "quit":
             exit()
+
+        elif player.cmd == "inventory":
+            player.showInventory()
+            continue
 
         elif player.cmd == "menu":
             player.displayMenu(locale)
