@@ -128,8 +128,9 @@ def mainGame():
             continue
         
         #Displays map
-        if "Map" in player.inventory:
-            guiMap()
+        elif player.cmd == "map":
+            if "Map" in player.inventory:
+                guiMap()
                 
 
         elif player.cmd[0:4] == "take":
@@ -238,7 +239,7 @@ def setCharacter():
     return character
 
             
-
+#GUI
 def guiMap():
 
     win = GraphWin("Map", 480, 360)
@@ -275,12 +276,7 @@ def guiMap():
     Line(Point(5.6,4.5),Point(7.2,4.5)).draw(win),#WF to KL
     Line(Point(5.7,6.5),Point(7.3,6.5)).draw(win)#CB to DS
     
-    
     ]
-
-    
-    
-    
     
 
 def main():
