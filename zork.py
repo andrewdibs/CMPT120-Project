@@ -5,6 +5,7 @@
 
 from classesZork import Player, Locale
 import sys
+from graphics import *
 
 
 def mainGame():
@@ -127,13 +128,9 @@ def mainGame():
             continue
         
         #Displays map
-        elif player.cmd == "map":
-            if "Map" in player.inventory:
-                showMap()
-                continue
-            else:
-                print("\n You don't have a map.\n")
-                continue
+        if "Map" in player.inventory:
+            guiMap()
+                
 
         elif player.cmd[0:4] == "take":
             player.take(locale, items)
@@ -240,28 +237,51 @@ def setCharacter():
 
     return character
 
-def showMap():
-    print(     "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"
-              "<                                                          >\n"
-              "<                       North Wall                         >\n"
-              "<                            *                             >\n"
-              "<                            *            The Cave         >\n"
-              "<                            *               *             >\n"
-              "<                      Castle Black-----DragonStone        >\n"
-              "<                            *               *             >\n"
-              "<      Iron Vessel           *               *             >\n"
-              "<            *               *               *             >\n"
-              "<      IronIslands------Winterfell------KingsLanding       >\n"
-              "<                            *               *             >\n"
-              "<                            *               *             >\n"
-              "<                            *               *             >\n"
-              "<        The Arena------HighGarden--------Braavos----Veil  >\n"
-              "<                                                          >\n"
-              "<                                                          >\n"
-              " vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv\n")
             
 
+def guiMap():
 
+    win = GraphWin("Map", 480, 360)
+    win.setCoords(0,0,10,10)
+    locs= [
+    Text(Point(5,8.5),"North Wall" ).draw(win),
+    Text(Point(5,6.5),"Castle Black").draw(win),
+    Text(Point(5,4.5),"Winterfell").draw(win),
+    Text(Point(5,2.5),"High Garden").draw(win),
+    Text(Point(2 ,2.5),"The Arena").draw(win),
+    Text(Point(2 ,4.5),"Iron Islands").draw(win),
+    Text(Point(2 ,5.5),"Iron Vessel").draw(win),
+    Text(Point(8, 2.5),"Braavos").draw(win),
+    Text(Point(9.5,2.5),"Veil").draw(win),
+    Text(Point(8,4.5),"Kings Landing").draw(win),
+    Text(Point(8, 6.5), "Dragonstone").draw(win),
+    Text(Point(8, 7.5), "The Cave").draw(win)
+    ]
+
+    locs[0].setTextColor("Red")
+
+    lines= [
+    Line(Point(5,8.3),Point(5,6.7)).draw(win),#NW to CB
+    Line(Point(5,6.3), Point(5,4.7)).draw(win),#CB toWF
+    Line(Point(5,4.3), Point(5,2.7)).draw(win),#WF to HG
+    Line(Point(2,5.3), Point(2,4.7)).draw(win),#IV to II
+    Line(Point(8, 7.3), Point(8,6.7)).draw(win),#C to DS
+    Line(Point(8,6.3), Point(8,4.7)).draw(win),#DS to KL
+    Line(Point(8,4.3), Point(8,2.7)).draw(win),#KL to B
+    Line(Point(2.5,4.5),Point(4.5,4.5)).draw(win),#II to WF
+    Line(Point(2.5,2.5),Point(4.3,2.5)).draw(win), #A to HG
+    Line(Point(5.7,2.5),Point(7.5,2.5)).draw(win),#HG to B
+    Line(Point(8.5,2.5),Point(9.3,2.5)).draw(win),#B to V
+    Line(Point(5.6,4.5),Point(7.2,4.5)).draw(win),#WF to KL
+    Line(Point(5.7,6.5),Point(7.3,6.5)).draw(win)#CB to DS
+    
+    
+    ]
+
+    
+    
+    
+    
 
 def main():
     #Stack
