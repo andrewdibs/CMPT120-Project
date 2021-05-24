@@ -1,2 +1,3 @@
 # CMPT120-Project
-Project 1 zork first steps
+Text-Base GOT python game. First actual project completed at Marist.
+
